@@ -1,0 +1,121 @@
+.home {
+  color: white;
+  flex: 2.5;
+  height: 100%;
+  background: rgb(18, 18, 18);
+  background: linear-gradient(
+    0deg,
+    rgba(18, 18, 18, 1) 0%,
+    rgba(18, 18, 18, 1) 66%,
+    rgba(51, 51, 51, 1) 100%
+  );
+  border-radius: 8px;
+  overflow: scroll;
+  padding-top: 40px;
+  margin-right: 0;
+  padding-right: 0;
+  position: relative;
+
+  .homeHeader {
+    .greeting {
+      padding-left: 20px;
+      font-size: 30px;
+    }
+
+    .suggestions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+
+      .suggestion {
+        width: 47%;
+        display: flex;
+        align-items: center;
+        background-color: rgba(190, 190, 190, 0.1);
+        border-radius: 6px;
+        overflow: hidden;
+        transition: 0.5s all ease;
+        text-decoration: none;
+        color: white;
+
+        img {
+          height: 50px;
+          width: 50px;
+          margin-right: 10px;
+        }
+
+        .suggestionName {
+          font-size: 14px;
+          font-weight: 600;
+        }
+
+        .iconContainer {
+          right: 0;
+          margin-left: auto;
+          margin-right: 10px;
+          display: none;
+          background-color: black;
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+          justify-content: center;
+          align-items: center;
+          text-align: center;
+
+          .icon {
+            color: #1ed760;
+            font-size: 20 !important;
+            text-shadow: 0px 3px 8px rgba(0, 0, 0, 0.5);
+          }
+        }
+
+        &:hover {
+          background-color: rgba(190, 190, 190, 0.3);
+          cursor: pointer;
+
+          .iconContainer {
+            display: flex;
+          }
+        }
+      }
+    }
+  }
+
+  .featuredContainer {
+    margin-bottom: 150px;
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  .track-vertical {
+    top: 2px;
+    bottom: 130px;
+    right: 2px;
+    min-width: 12px;
+    background: transparent;
+
+    .thumb-vertical {
+      position: relative;
+      display: block;
+      width: 100%;
+      border-radius: inherit;
+      background-color: lightgray;
+      opacity: 0.3;
+    }
+  }
+
+  .view {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    overflow: scroll;
+    margin-right: -15px;
+    margin-bottom: -17px !important; // changed from -15px  (default) to -17px (native scrollbar had a portion visible)
+  }
+}

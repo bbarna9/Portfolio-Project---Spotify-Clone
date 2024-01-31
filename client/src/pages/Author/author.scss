@@ -1,0 +1,431 @@
+.author {
+  flex: 2.5;
+  height: calc(100% - 90px);
+
+  .container {
+    color: white;
+    flex: 2.5;
+    height: 100%;
+    border-radius: 8px;
+    overflow: scroll;
+    margin-right: 0;
+    padding-right: 0;
+    background-color: #121212;
+
+    .mainContainer {
+      background: rgb(18, 18, 18);
+
+      .header {
+        padding: 0 20px;
+        padding-top: 80px;
+        padding-bottom: 20px;
+        height: fit-content;
+        display: flex;
+        background-image: url('https://www.leisurebyte.com/wp-content/uploads/2023/04/PostMalone-Chemical-1.jpg');
+        background-repeat: no-repeat;
+        background-position: center;
+
+        .left {
+          img {
+            margin-right: 20px;
+            width: 200px;
+            height: 200px;
+            border-radius: 4px;
+            box-shadow: 0px 4px 23px -3px rgba(0, 0, 0, 0.75);
+            -webkit-box-shadow: 0px 4px 23px -3px rgba(0, 0, 0, 0.75);
+            -moz-box-shadow: 0px 4px 23px -3px rgba(0, 0, 0, 0.75);
+          }
+        }
+
+        .right {
+          display: flex;
+          flex-direction: column;
+          position: relative;
+
+          .type {
+            margin: 25px 0;
+            display: flex;
+            align-items: center;
+
+            .iconBackground {
+              color: #3d91f4;
+            }
+
+            .checkIcon {
+              position: absolute;
+              color: white;
+              left: 5px;
+            }
+
+            span {
+              margin-left: 6px;
+              font-size: 13px;
+              font-weight: 600;
+            }
+          }
+
+          .albumTitle {
+            font-size: 90px;
+            margin: 0;
+            line-height: 70px;
+            padding: 0;
+            margin-bottom: 40px;
+          }
+
+          .bottomInfo {
+            bottom: 2px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 14px;
+            font-weight: 500;
+
+            img {
+              width: 25px;
+              height: 25px;
+              border-radius: 50%;
+              object-fit: cover;
+            }
+
+            .singer {
+              font-weight: 600;
+            }
+            .date {
+            }
+            .length {
+            }
+          }
+        }
+      }
+
+      .list {
+        background: rgb(18, 18, 18);
+        background: linear-gradient(
+          0deg,
+          rgba(18, 18, 18, 1) 0%,
+          rgba(18, 18, 18, 1) 40%,
+          rgba(18, 18, 18, 0.2) 100%
+        );
+
+        .items {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+
+        .top {
+          display: flex;
+          padding: 20px;
+          align-items: center;
+          justify-content: space-between;
+
+          .left {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+
+            .play {
+              color: #1ed760;
+              background-color: black;
+              border-radius: 50%;
+              text-shadow: 0px 2px 8px rgba(0, 0, 0, 0.5);
+
+              &:hover {
+                scale: 1.05;
+                cursor: pointer;
+              }
+            }
+
+            .shuffle {
+              color: #a7a7a7;
+
+              &:hover {
+                scale: 1.05;
+                cursor: pointer;
+                color: white;
+              }
+            }
+
+            .followButton {
+              border: 0.1px solid lightgray;
+              border-radius: 36px;
+              height: 30px;
+              width: 80px;
+              padding: 20 25px;
+              background-color: transparent;
+              color: white;
+              font-weight: 600;
+              cursor: pointer;
+
+              &:hover {
+                border: 1px solid white;
+                scale: 1.05;
+              }
+            }
+
+            .more {
+              color: #a7a7a7;
+
+              &:hover {
+                scale: 1.05;
+                cursor: pointer;
+                color: white;
+              }
+            }
+          }
+
+          .right {
+            color: #a7a7a7;
+
+            span {
+              font-size: 14px;
+              font-weight: 600;
+            }
+
+            .icon {
+              padding: 0 8px;
+            }
+
+            &:hover {
+              cursor: pointer;
+              color: white;
+            }
+          }
+        }
+
+        .head {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin: 25px;
+          margin-top: 0;
+
+          h1 {
+            font-size: 22px;
+            margin: 0;
+          }
+        }
+
+        .bottom {
+          display: flex;
+          flex-direction: column;
+          padding: 10px 0;
+
+          .song {
+            display: flex;
+            margin: 0 20px;
+            height: 60px;
+            border-radius: 4px;
+
+            .left {
+              display: flex;
+              flex: 5;
+
+              .number {
+                width: 50px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: #a7a7a7;
+                font-weight: 600;
+              }
+
+              .playIcon {
+                display: none;
+                width: 50px;
+                justify-content: center;
+                align-items: center;
+                color: white;
+              }
+
+              .info {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 3px;
+
+                .albumCover {
+                  height: 40px;
+                  width: 40px;
+                  border-radius: 3px;
+                  margin-right: 10px;
+                }
+
+                .title {
+                  font-size: 14px;
+                  font-weight: 600;
+                }
+              }
+            }
+
+            .right {
+              display: flex;
+              flex: 4;
+              color: #a7a7a7;
+              align-items: center;
+              justify-content: space-between;
+              width: 100%;
+
+              .plays {
+                margin: 0 30px;
+                font-size: 14px;
+                font-weight: 600;
+              }
+
+              .end {
+                display: flex;
+                align-items: center;
+
+                .length {
+                  font-size: 14px;
+                  font-weight: 600;
+                }
+
+                .more {
+                  display: flex;
+                  opacity: 0;
+                  margin: 0 20px;
+                  color: white;
+                  cursor: pointer;
+                }
+              }
+            }
+
+            &:hover {
+              background-color: #52525259;
+
+              .left {
+                .number {
+                  display: none;
+                }
+
+                .playIcon {
+                  display: flex;
+                }
+              }
+
+              .right {
+                .end {
+                  .more {
+                    opacity: 1;
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        .footer {
+          display: flex;
+          flex-direction: column;
+          padding: 20px;
+          margin-left: 20px;
+          color: #a7a7a7;
+          gap: 3px;
+          font-size: 14px;
+          font-weight: 700;
+
+          &:hover {
+            color: white;
+          }
+        }
+      }
+    }
+
+    .merch {
+      display: flex;
+      flex-direction: column;
+      margin: 20px;
+      margin-bottom: 50px;
+
+      .head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 25px;
+
+        h1 {
+          font-size: 22px;
+          margin: 0;
+        }
+      }
+
+      .items {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+
+    .others {
+      margin: 20px;
+      margin-bottom: 20px;
+
+      .head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 25px;
+
+        h1 {
+          font-size: 22px;
+          margin: 0;
+        }
+
+        span {
+          color: #b3b3b3;
+          font-size: 14px;
+          font-weight: 600;
+
+          &:hover {
+            text-decoration: underline;
+            text-decoration-thickness: 1.5px;
+            cursor: pointer;
+          }
+        }
+      }
+
+      .albums {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  .track-vertical {
+    top: 2px;
+    bottom: 130px;
+    right: 2px;
+    min-width: 12px;
+    background: transparent;
+
+    .thumb-vertical {
+      position: relative;
+      display: block;
+      width: 100%;
+      border-radius: inherit;
+      background-color: lightgray;
+      opacity: 0.3;
+    }
+  }
+
+  .view {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    overflow: scroll;
+    margin-right: -15px;
+    margin-bottom: -17px !important; // changed from -15px  (default) to -17px (native scrollbar had a portion visible)
+  }
+}

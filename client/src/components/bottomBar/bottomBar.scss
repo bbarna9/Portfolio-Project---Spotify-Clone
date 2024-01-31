@@ -1,0 +1,241 @@
+.bottombar {
+  background-color: black;
+  width: 100vw;
+  height: 100px;
+  display: flex;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+
+  .left {
+    display: flex;
+    padding: 15px;
+    gap: 20px;
+    flex: 1;
+    color: white;
+
+    img {
+      height: 70px;
+      border-radius: 6px;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    .info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+
+      .title {
+        padding: 0;
+        margin: 0;
+        font-weight: 600;
+        text-decoration: none;
+        color: white;
+
+        &:hover {
+          cursor: pointer;
+          text-decoration: underline;
+        }
+      }
+
+      .singer {
+        text-decoration: none;
+        padding: 0;
+        margin: 0;
+        font-size: 12px;
+        font-weight: 600;
+        color: #9c9c9c;
+
+        &:hover {
+          cursor: pointer;
+          color: white;
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  .center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 3;
+    align-items: center;
+
+    .top {
+      display: flex;
+      text-align: center;
+      align-items: center;
+      height: 40px;
+      gap: 20px;
+
+      .icon {
+        font-size: 20 !important;
+
+        &:hover {
+          color: white;
+        }
+      }
+
+      .shuffle {
+        color: #b2b2b2;
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+
+      .goBack {
+        color: #b2b2b2;
+      }
+
+      .goForward {
+        color: #b2b2b2;
+      }
+
+      .play {
+        color: white;
+
+        &:hover {
+          scale: 1.05;
+        }
+      }
+
+      .pause {
+        color: white;
+
+        &:hover {
+          scale: 1.05;
+        }
+      }
+
+      .repeat {
+        color: #b2b2b2;
+      }
+    }
+
+    .bottom {
+      display: flex;
+
+      .progressContainer {
+        margin: 5px 10px;
+        position: relative;
+
+        .progressBar {
+          width: 500px;
+          height: 4px;
+          background-color: #4d4d4d;
+          align-self: center;
+          border-radius: 30px;
+        }
+
+        .progress {
+          width: 300px;
+          height: 4px;
+          background-color: white;
+          align-self: center;
+          border-radius: 30px;
+          left: 0;
+        }
+
+        .progressBall {
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          background-color: white;
+          position: absolute;
+          left: 294px;
+          top: 0;
+          bottom: 0;
+          margin: auto;
+          display: none;
+        }
+      }
+
+      &:hover {
+        .progress {
+          background-color: #1ed760;
+        }
+
+        .progressBall {
+          display: block;
+        }
+      }
+
+      .length {
+        font-size: 12px !important;
+        color: #9c9c9c;
+      }
+    }
+  }
+
+  .right {
+    display: flex;
+    gap: 20px;
+    flex: 1;
+    color: white;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+    color: #9c9c9c;
+
+    .volume {
+      display: flex;
+      height: 100%;
+      align-items: center;
+      position: relative;
+
+      .volumeBar {
+        width: 100px;
+        height: 4px;
+        background-color: #4d4d4d;
+        align-self: center;
+        border-radius: 30px;
+        margin-left: 20px;
+
+        .volumeProgress {
+          width: 20px;
+          height: 4px;
+          background-color: white;
+          align-self: center;
+          border-radius: 30px;
+          left: 0;
+        }
+      }
+
+      .volumeBall {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background-color: white;
+        position: absolute;
+        left: 44px;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        display: none;
+      }
+
+      &:hover {
+        .volumeProgress {
+          background-color: #1ed760;
+        }
+
+        .volumeBall {
+          display: block;
+        }
+      }
+    }
+
+    .icon:hover {
+      color: white;
+      cursor: pointer;
+    }
+  }
+}

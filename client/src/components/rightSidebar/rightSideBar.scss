@@ -1,0 +1,497 @@
+.rightsidebar {
+  background-color: #121212;
+  color: white;
+  width: 21vw;
+  height: 100%;
+  border-radius: 8px;
+  overflow-y: scroll;
+
+  .onPlay {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 105px;
+
+    .song {
+      padding: 0 15px;
+
+      .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .albumTitle {
+        }
+
+        .close {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 16px !important;
+          color: #b6b6b6;
+          padding: 10px;
+          border-radius: 50%;
+          height: 10px;
+          width: 10px;
+          background-color: transparent;
+          cursor: pointer;
+          transition: 0.5s all ease;
+
+          &:hover {
+            background-color: #272727;
+            color: white;
+          }
+        }
+      }
+
+      img {
+        width: 100%;
+        border-radius: 8px;
+      }
+
+      .bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 10px 0;
+
+        .left {
+          .songTitle {
+            margin: 0;
+            padding: 0;
+            cursor: pointer;
+
+            &:hover {
+              text-decoration: underline;
+              text-decoration-thickness: 2px;
+            }
+          }
+
+          .infoSinger {
+            font-size: 14px;
+            font-weight: 500;
+            margin: 0;
+            padding: 0;
+            color: #b6b6b6;
+            cursor: pointer;
+            text-decoration: none;
+
+            &:hover {
+              color: white;
+              text-decoration: underline;
+              text-decoration-thickness: 1.5px;
+            }
+          }
+        }
+
+        .right {
+          .icon {
+            color: #b6b6b6;
+            cursor: pointer;
+
+            &:hover {
+              color: white;
+              scale: 1.05;
+            }
+          }
+        }
+      }
+    }
+    .singer {
+      display: flex;
+      flex-direction: column;
+      margin: 15px;
+      background-color: #242424;
+      border-radius: 8px;
+      overflow: hidden;
+      cursor: pointer;
+
+      .top {
+        flex: 1;
+        position: relative;
+
+        span {
+          position: absolute;
+          padding: 15px;
+          font-weight: 600;
+          font-size: 14px;
+          height: 100%;
+          width: 100%;
+          box-shadow: -1px 85px 63px -55px rgba(0, 0, 0, 0.78) inset;
+          -webkit-box-shadow: -1px 85px 63px -55px rgba(0, 0, 0, 0.78) inset;
+          -moz-box-shadow: -1px 85px 63px -55px rgba(0, 0, 0, 0.78) inset;
+        }
+
+        img {
+          width: 100%;
+          height: 150px;
+          object-fit: cover;
+        }
+      }
+
+      .bottom {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px;
+
+        .name {
+          font-size: 15px;
+          font-weight: 700;
+          text-decoration: none;
+          color: white;
+        }
+
+        .stats {
+          color: #b6b6b6;
+          display: flex;
+          justify-content: space-between;
+
+          span {
+            font-weight: 600;
+            font-size: 15px;
+            width: 60%;
+          }
+
+          .followButton {
+            border: 0.1px solid lightgray;
+            border-radius: 36px;
+            height: 30px;
+            width: 80px;
+            padding: 20 25px;
+            background-color: transparent;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+
+            &:hover {
+              border: 1px solid white;
+              scale: 1.05;
+            }
+          }
+        }
+
+        .desc {
+          padding: 0;
+          margin: 0;
+          color: #b6b6b6;
+          font-size: 13px;
+          font-weight: 600;
+        }
+      }
+    }
+
+    .authors {
+      display: flex;
+      flex-direction: column;
+      margin: 15px;
+      padding: 15px;
+      background-color: #242424;
+      border-radius: 8px;
+      gap: 15px;
+
+      .head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .title {
+          margin: 0;
+          font-size: 15px;
+          font-weight: 700;
+        }
+
+        span {
+          color: #b6b6b6;
+          font-size: 13px;
+          font-weight: 600;
+          cursor: pointer;
+          height: max-content;
+
+          &:hover {
+            scale: 1.05;
+            text-decoration: underline;
+            text-decoration-thickness: 1.5px;
+            color: white;
+          }
+        }
+      }
+
+      .list {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+
+        .author {
+          display: flex;
+          flex-direction: column;
+          gap: 5px;
+
+          .name {
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            color: white;
+
+            &:hover {
+              text-decoration: underline;
+              text-decoration-thickness: 1.5px;
+            }
+          }
+
+          .authorTitle {
+            font-size: 14px;
+            font-weight: 600;
+            color: #b6b6b6;
+          }
+        }
+      }
+    }
+
+    .tour {
+      display: flex;
+      flex-direction: column;
+      margin: 15px;
+      padding: 15px;
+      padding-right: 0;
+      background-color: #242424;
+      border-radius: 8px;
+      gap: 15px;
+
+      .head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-right: 15px;
+
+        .title {
+          margin: 0;
+          font-size: 15px;
+          font-weight: 700;
+        }
+
+        span {
+          color: #b6b6b6;
+          font-size: 13px;
+          font-weight: 600;
+          cursor: pointer;
+          height: max-content;
+
+          &:hover {
+            scale: 1.05;
+            text-decoration: underline;
+            text-decoration-thickness: 1.5px;
+            color: white;
+          }
+        }
+      }
+
+      .tourDates {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+
+        .tourDate {
+          display: flex;
+
+          .left {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            background-color: #1a1a1a;
+            width: 50px;
+            max-height: 50px;
+            border-radius: 6px;
+
+            .month {
+              font-size: 10px;
+              font-weight: 700;
+            }
+
+            .day {
+              font-size: 22px;
+              font-weight: 700;
+            }
+          }
+
+          .right {
+            display: flex;
+            width: 70%;
+            overflow: hidden;
+
+            .info {
+              display: flex;
+              flex-direction: column;
+
+              .location {
+                font-size: 15px;
+                font-weight: 600;
+              }
+
+              .name {
+                font-size: 14px;
+                font-weight: 600;
+              }
+              .time {
+                font-size: 14px;
+                font-weight: 600;
+                color: #b6b6b6;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .merch {
+    }
+
+    .currently {
+      display: flex;
+      flex-direction: column;
+      margin: 15px;
+      padding: 10px;
+      background-color: #242424;
+      border-radius: 8px;
+      gap: 15px;
+
+      .head {
+        padding-top: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .title {
+          margin: 0;
+          padding: 0 5px;
+          font-size: 15px;
+          font-weight: 700;
+        }
+
+        span {
+          color: #b6b6b6;
+          font-size: 13px;
+          font-weight: 600;
+          cursor: pointer;
+          height: max-content;
+
+          &:hover {
+            scale: 1.05;
+            text-decoration: underline;
+            text-decoration-thickness: 1.5px;
+            color: white;
+          }
+        }
+      }
+
+      .nextSong {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        border-radius: 6px;
+
+        .songIcon {
+          color: #b6b6b6;
+          width: 10%;
+        }
+
+        .playIcon {
+          display: none;
+          width: 10%;
+        }
+
+        img {
+          width: 50px;
+          height: 50px;
+          border-radius: 5px;
+          margin-right: 10px;
+        }
+
+        .songInfo {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          gap: 3px;
+          height: 50px;
+
+          .title {
+            font-size: 14px;
+            font-weight: 600;
+            padding: 0;
+            margin: 0;
+
+            &:hover {
+              text-decoration: underline;
+              text-decoration-thickness: 1.5px;
+            }
+          }
+
+          .singer {
+            font-size: 13px;
+            font-weight: 600;
+            color: #b6b6b6;
+            padding: 0;
+            margin: 0;
+            background-color: transparent;
+
+            &:hover {
+              color: white;
+              text-decoration: underline;
+              text-decoration-thickness: 1.5px;
+            }
+          }
+        }
+
+        &:hover {
+          background-color: #3a3a3a;
+
+          .songIcon {
+            display: none;
+          }
+
+          .playIcon {
+            display: block;
+          }
+        }
+      }
+    }
+  }
+
+  &.closed {
+    display: none;
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  .track-vertical {
+    top: 2px;
+    bottom: 130px;
+    right: 2px;
+    min-width: 10px;
+    background: transparent;
+
+    .thumb-vertical {
+      position: relative;
+      display: block;
+      width: 100%;
+      border-radius: inherit;
+      background-color: lightgray;
+      opacity: 0.3;
+    }
+  }
+
+  .view {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    overflow: scroll;
+    margin-right: -15px;
+    margin-bottom: -17px !important; // changed from -15px  (default) to -17px (native scrollbar had a portion visible)
+  }
+}

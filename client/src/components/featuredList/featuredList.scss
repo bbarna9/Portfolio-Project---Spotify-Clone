@@ -1,0 +1,40 @@
+.featuredList {
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+  overflow: hidden;
+  scrollbar-gutter: stable;
+  margin-right: 0;
+  padding-right: 0;
+
+  .top {
+    .listHeader {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 25px;
+
+      .listTitle {
+        font-size: 22px;
+        margin: 0;
+      }
+
+      span {
+        color: #b3b3b3;
+        font-size: 14px;
+        font-weight: 600;
+
+        &:hover {
+          text-decoration: underline;
+          text-decoration-thickness: 1.5px;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  .bottom {
+    display: flex;
+    justify-content: space-between;
+  }
+}

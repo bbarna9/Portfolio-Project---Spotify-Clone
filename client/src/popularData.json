@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "cover": "https://i.scdn.co/image/ab67616d0000b2739478c87599550dd73bfa7e02",
+    "title": "Sunflower - Spider-Man: Into the Spider-Verse",
+    "plays": "3 133 554 862",
+    "length": "2:37"
+  },
+  {
+    "id": 2,
+    "cover": "https://i.scdn.co/image/ab67616d0000b2739478c87599550dd73bfa7e02",
+    "title": "Circles",
+    "plays": "24 643 210",
+    "length": "3:03"
+  },
+  {
+    "id": 3,
+    "cover": "https://i.scdn.co/image/ab67616d0000b2739478c87599550dd73bfa7e02",
+    "title": "Chemical",
+    "plays": "24 643 210",
+    "length": "3:03"
+  },
+  {
+    "id": 4,
+    "cover": "https://i.scdn.co/image/ab67616d0000b273b1c4b76e23414c9f20242268",
+    "title": "rockstar",
+    "plays": "24 643 210",
+    "length": "3:03"
+  },
+  {
+    "id": 5,
+    "cover": "https://upload.wikimedia.org/wikipedia/en/0/03/Post_Malone_-_Twelve_Carat_Toothache.png",
+    "title": "One Right Now",
+    "plays": "24 643 210",
+    "length": "3:03"
+  }
+]
