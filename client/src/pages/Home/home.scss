@@ -29,6 +29,12 @@
       justify-content: center;
       gap: 10px;
 
+      &.closed {
+        .suggestion {
+          width: 23%;
+        }
+      }
+
       .suggestion {
         width: 47%;
         display: flex;
@@ -36,7 +42,6 @@
         background-color: rgba(190, 190, 190, 0.1);
         border-radius: 6px;
         overflow: hidden;
-        transition: 0.5s all ease;
         text-decoration: none;
         color: white;
 
@@ -74,6 +79,7 @@
         &:hover {
           background-color: rgba(190, 190, 190, 0.3);
           cursor: pointer;
+          transition: 0.5s all ease;
 
           .iconContainer {
             display: flex;

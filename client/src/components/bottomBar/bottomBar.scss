@@ -8,6 +8,18 @@
   left: 0;
   z-index: 999;
 
+  &.closed {
+    .right {
+      .sideOpen {
+        color: #9c9c9c;
+
+        &:hover {
+          color: #1ed760 !important;
+        }
+      }
+    }
+  }
+
   .left {
     display: flex;
     padding: 15px;
@@ -184,6 +196,15 @@
     align-items: center;
     margin-right: 10px;
     color: #9c9c9c;
+
+    .sideOpen {
+      color: #1ed760;
+
+      &:hover {
+        color: #1ed760;
+        cursor: pointer;
+      }
+    }
 
     .volume {
       display: flex;

@@ -4,8 +4,41 @@ import './album.scss';
 import data from '../../albumData.json';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { Link } from 'react-router-dom';
+import { useEffect, useReducer } from 'react';
+import axios from 'axios';
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'FETCH_ALBUM_START':
+      return { ...state, loading: true };
+    case 'FETCH_ALBUM_SUCCESS':
+      return { ...state, album: action.payload, loading: false };
+    case 'FETCH_ALBUM_FAILURE':
+      return { ...state, loading: false, error: action.payload };
+  }
+};
 
 const Album = () => {
+  const [{ loading, error, album }, dispatch] = useReducer(reducer, {
+    album: {},
+    loading: true,
+    error: '',
+  });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      dispatch({ type: 'FETCH_ALBUM_START' });
+      try {
+        const result = await axios.get('http://localhost:3000/api/albums');
+        dispatch({ type: 'FETCH_ALBUM_SUCCESS', payload: result.data[0] });
+        console.log();
+      } catch (err) {
+        dispatch({ type: 'FETCH_ALBUM_FAILURE', payload: error.message });
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <div className="album">
       <Navbar />
@@ -13,14 +46,11 @@ const Album = () => {
         <div className="mainContainer">
           <div className="header">
             <div className="left">
-              <img
-                src="https://m.media-amazon.com/images/I/91rgNXHkQCL._UF1000,1000_QL80_.jpg"
-                alt=""
-              />
+              <img src={album.coverImg} alt="" />
             </div>
             <div className="right">
               <span className="type">Album</span>
-              <h1 className="albumTitle">AUSTIN</h1>
+              <h1 className="albumTitle">{album.title}</h1>
               <div className="bottomInfo">
                 <img
                   src="https://i.scdn.co/image/ab6761610000e5eb6be070445b03e0b63147c2c1"
@@ -59,25 +89,27 @@ const Album = () => {
               </div>
             </div>
             <div className="bottom">
-              {data.map((song, id) => (
-                <div key={id} className="song">
-                  <div className="left">
-                    <div className="number">{id + 1}</div>
-                    <i className="playIcon fa-solid fa-play"></i>
-                    <div className="info">
-                      <div className="title">{song.title}</div>
-                      <div className="singer">Post Malone</div>
+              {loading
+                ? 'Loading...'
+                : album.songs?.map((song, id) => (
+                    <div key={id} className="song">
+                      <div className="left">
+                        <div className="number">{id + 1}</div>
+                        <i className="playIcon fa-solid fa-play"></i>
+                        <div className="info">
+                          <div className="title">{song.title}</div>
+                          <div className="singer">The Weeknd</div>
+                        </div>
+                      </div>
+                      <div className="right">
+                        <div className="plays">{song.listens}</div>
+                        <div className="end">
+                          <div className="length">{song.length}</div>
+                          <i className="icon more fa-solid fa-ellipsis fa-2x"></i>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                  <div className="right">
-                    <div className="plays">{song.plays}</div>
-                    <div className="end">
-                      <div className="length">{song.length}</div>
-                      <i className="icon more fa-solid fa-ellipsis fa-2x"></i>
-                    </div>
-                  </div>
-                </div>
-              ))}
+                  ))}
             </div>
             <div className="footer">
               <div className="releaseDate">2023. július 28.</div>

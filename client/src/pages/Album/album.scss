@@ -207,7 +207,7 @@
             justify-content: space-between;
 
             .clockIcon {
-              padding-right: 70px;
+              padding-right: 75px;
             }
           }
         }
@@ -272,9 +272,11 @@
               width: 100%;
 
               .plays {
-                margin: 0 30px;
+                margin: 0 15px;
                 font-size: 14px;
                 font-weight: 600;
+                width: 100px;
+                text-align: right;
               }
 
               .end {

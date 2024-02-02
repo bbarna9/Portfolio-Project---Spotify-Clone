@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useContext, useState, useRef } from 'react';
 import './bottomBar.scss';
 import { Link } from 'react-router-dom';
+import { PlayerContext } from '../../Player';
 
 const BottomBar = () => {
   const play = false;
@@ -16,8 +17,21 @@ const BottomBar = () => {
     volumePower = 'icon fa-solid fa-volume-xmark';
   }
 
+  const { isOpen, dispatch } = useContext(PlayerContext);
+  const [visible, setVisible] = useState(isOpen);
+
+  const sidebarHandler = async (e) => {
+    e.preventDefault();
+    try {
+      dispatch({ type: 'SIDEBAR_TOGGLE' });
+      setVisible(!visible);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
-    <div className="bottombar">
+    <div className={isOpen ? 'bottombar opened' : 'bottombar closed'}>
       <div className="left">
         <Link to="/album">
           <img
@@ -60,7 +74,10 @@ const BottomBar = () => {
         </div>
       </div>
       <div className="right">
-        <i className="icon fa-regular fa-square-caret-right"></i>
+        <i
+          className="sideOpen fa-regular fa-square-caret-right"
+          onClick={sidebarHandler}
+        ></i>
         <i className="icon fa-solid fa-microphone"></i>
         <i className="icon fa-solid fa-bars"></i>
         <i className="icon fa-solid fa-computer"></i>

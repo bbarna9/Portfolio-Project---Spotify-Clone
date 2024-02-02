@@ -1,10 +1,23 @@
 import Scrollbars from 'react-custom-scrollbars';
 import './rightSideBar.scss';
 import { Link } from 'react-router-dom';
+import { useContext, useEffect, useState } from 'react';
+import { PlayerContext } from '../../Player';
 
 const RightSideBar = () => {
+  const { isOpen, dispatch } = useContext(PlayerContext);
+
+  const closeHandler = async (e) => {
+    e.preventDefault();
+    try {
+      dispatch({ type: 'SIDEBAR_CLOSE' });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
-    <div className={open ? 'rightsidebar' : 'rightsidebar closed'}>
+    <div className={isOpen ? 'rightsidebar' : 'rightsidebar closed'}>
       <Scrollbars
         autoHide
         autoHideTimeout={1000}
@@ -28,7 +41,7 @@ const RightSideBar = () => {
           <div className="song">
             <div className="header">
               <h3 className="albumTitle">AUSTIN</h3>
-              <i className="close fa-solid fa-xmark"></i>
+              <i className="close fa-solid fa-xmark" onClick={closeHandler}></i>
             </div>
             <img
               src="https://m.media-amazon.com/images/I/91rgNXHkQCL._UF1000,1000_QL80_.jpg"

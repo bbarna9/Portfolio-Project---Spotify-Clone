@@ -1,14 +1,20 @@
 import { Link } from 'react-router-dom';
 import './featuredItem.scss';
 import PropTypes from 'prop-types';
+import { PlayerContext } from '../../Player';
+import { useContext } from 'react';
 
 const FeaturedItem = (props) => {
+  const { isOpen } = useContext(PlayerContext);
+
   const show = props.shown === false ? false : true;
   // const show = props.shown;
-  console.log(show);
 
   return (
-    <Link to="/album" className="featuredItem">
+    <Link
+      to="/album"
+      className={isOpen ? 'featuredItem' : 'featuredItem closed'}
+    >
       <div className="top">
         <img src={props.img} alt="" />
         {show === true ? (

@@ -1,14 +1,30 @@
 .featuredItem {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   padding: 15px;
   background-color: #181818;
-  transition: 0.5s all ease;
   border-radius: 8px;
   max-width: 180px;
   cursor: pointer;
   text-decoration: none;
   color: white;
+
+  &.closed {
+    height: 280px;
+    width: 190px;
+    align-items: center;
+    justify-content: center;
+
+    .top {
+      scale: 1.2;
+    }
+
+    .info {
+      scale: 1.2;
+      margin-top: 40px;
+    }
+  }
 
   .top {
     position: relative;
@@ -78,6 +94,7 @@
 
   &:hover {
     background-color: #272727;
+    transition: 0.5s all ease;
 
     .iconContainer {
       opacity: 1;

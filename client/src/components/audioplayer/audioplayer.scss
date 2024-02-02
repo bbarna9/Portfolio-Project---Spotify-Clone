@@ -1,0 +1,67 @@
+.audioplayer {
+  color: white;
+  flex: 2.5;
+  height: 100%;
+  background: rgb(18, 18, 18);
+  background: linear-gradient(
+    0deg,
+    rgba(18, 18, 18, 1) 0%,
+    rgba(18, 18, 18, 1) 66%,
+    rgba(51, 51, 51, 1) 100%
+  );
+  border-radius: 8px;
+  overflow: scroll;
+  margin-right: 0;
+  padding-right: 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* 
+  .cheatContainer {
+    width: 70%;
+    position: absolute;
+
+    .cheatLineCont {
+      height: 300px;
+      width: 100%;
+      background-color: transparent;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+
+      .cheatLine {
+        height: 5px;
+        border-radius: 5px;
+        width: 100%;
+        background-color: aquamarine;
+        z-index: 999;
+        overflow: hidden; */
+
+  #waveform {
+    max-width: 60%;
+    align-items: center;
+    max-height: 5px;
+    border-radius: 6px;
+    background-color: #4d4d4d;
+  }
+  /*  }
+    }
+  }
+ */
+  .controls {
+    margin-top: 10px;
+
+    button {
+      height: 50px;
+      width: 50px;
+      scale: 0.8;
+      border-radius: 50%;
+    }
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
