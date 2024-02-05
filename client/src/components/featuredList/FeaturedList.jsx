@@ -16,7 +16,9 @@ const reducer = (state, action) => {
 };
 
 const FeaturedList = () => {
-  const { isOpen } = useContext(PlayerContext);
+  const { state } = useContext(PlayerContext);
+  const { isOpen } = state;
+
   const maxSize = isOpen ? 4 : 5;
 
   const [{ loading, error, lists }, dispatch] = useReducer(reducer, {
@@ -53,11 +55,12 @@ const FeaturedList = () => {
           ? 'Loading...'
           : lists
               .slice(0, maxSize)
-              .map((list, i) => (
+              .map((album, i) => (
                 <FeaturedItem
                   key={i}
-                  img={list.coverImg}
-                  title={list.title}
+                  img={album.coverImg}
+                  _id={album._id}
+                  title={album.title}
                   desc="Young Thug, A$AP Rocky, Lana Del Rey és még sokan mások"
                 />
               ))}

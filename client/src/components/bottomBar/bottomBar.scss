@@ -145,6 +145,15 @@
           max-height: 5px;
           border-radius: 6px;
           background-color: #4d4d4d;
+          position: relative;
+
+          .cheatLine {
+            position: absolute;
+            width: inherit;
+            border-radius: 6px;
+            background-color: transparent;
+            height: 100%;
+          }
         }
 
         .progressBar {
@@ -248,6 +257,14 @@
             width: 100px;
             height: 5px;
             border-radius: 5px;
+          }
+
+          &::-moz-range-progress {
+            background-color: #1ed760;
+            height: 5px;
+            border: none;
+            border-top-left-radius: 25px;
+            border-bottom-left-radius: 25px;
           }
 
           &::-webkit-slider-thumb {

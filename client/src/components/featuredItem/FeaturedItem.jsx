@@ -5,14 +5,15 @@ import { PlayerContext } from '../../Player';
 import { useContext } from 'react';
 
 const FeaturedItem = (props) => {
-  const { isOpen } = useContext(PlayerContext);
+  const { state } = useContext(PlayerContext);
+  const { isOpen } = state;
 
   const show = props.shown === false ? false : true;
   // const show = props.shown;
 
   return (
     <Link
-      to="/album"
+      to={`/albums/${props._id}`}
       className={isOpen ? 'featuredItem' : 'featuredItem closed'}
     >
       <div className="top">
@@ -35,6 +36,7 @@ const FeaturedItem = (props) => {
 
 FeaturedItem.propTypes = {
   img: PropTypes.string,
+  _id: PropTypes.string,
   title: PropTypes.string,
   desc: PropTypes.string,
   shown: PropTypes.bool,

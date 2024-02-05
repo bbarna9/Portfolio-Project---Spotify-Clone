@@ -16,7 +16,9 @@ import {
 } from 'react-router-dom';
 import Profile from './pages/Profile/Profile';
 import AddSong from './pages/AddSong/AddSong';
-import AudioPlayer from './components/audioplayer/AudioPlayer';
+import Login from './pages/Login/Login';
+import Register from './pages/Register/Register';
+import ProtectedRoute from './components/protectedRoute/ProtectedRoute';
 
 function App() {
   const Layout = () => {
@@ -40,16 +42,20 @@ function App() {
           element: <Home />,
         },
         {
-          path: '/album',
+          path: '/albums/:id',
           element: <Album />,
         },
         {
-          path: '/author',
+          path: '/authors/:id',
           element: <Author />,
         },
         {
           path: '/profile',
-          element: <Profile />,
+          element: (
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          ),
         },
         {
           path: '/addalbum',
@@ -64,8 +70,12 @@ function App() {
           element: <AddSong />,
         },
         {
-          path: '/audioplayer',
-          element: <AudioPlayer />,
+          path: '/login',
+          element: <Login />,
+        },
+        {
+          path: '/register',
+          element: <Register />,
         },
       ],
     },

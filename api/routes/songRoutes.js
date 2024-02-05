@@ -1,5 +1,6 @@
 import express from 'express';
 import Song from '../models/Song.js';
+import { isAdmin, verify } from '../utils.js';
 
 const router = express.Router();
 
@@ -16,7 +17,7 @@ router.get('/', async (req, res) => {
 
 // GET ONE SONG
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', verify, async (req, res) => {
   try {
     const song = await Song.findById(req.params.id);
     if (song) {
@@ -31,7 +32,7 @@ router.get('/:id', async (req, res) => {
 
 // GET SONGS BY AUTHOR
 
-router.get('/author/:authorKey', async (req, res) => {
+router.get('/author/:authorKey', verify, async (req, res) => {
   try {
     const songs = await Song.find({
       authorKey: req.params.authorKey,
@@ -48,7 +49,7 @@ router.get('/author/:authorKey', async (req, res) => {
 
 // ADD SONG
 
-router.post('/', async (req, res) => {
+router.post('/', verify, isAdmin, async (req, res) => {
   const newSong = new Song(req.body);
   try {
     const savedSong = await newSong.save();

@@ -4,6 +4,8 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import songRoutes from './routes/songRoutes.js';
 import albumRoutes from './routes/albumRoutes.js';
+import authRoutes from './routes/authRoutes.js';
+import userRoutes from './routes/userRoutes.js';
 // import authorRoutes from './routes/authorRoutes';
 
 const app = express();
@@ -21,6 +23,8 @@ app.use(express.json());
 app.use('/api/songs', songRoutes);
 app.use('/api/albums', albumRoutes);
 // app.use('/api/authors', authorRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
 
 dotenv.config();
 

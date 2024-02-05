@@ -27,7 +27,8 @@ const reducer = (state, action) => {
 };
 
 const Home = () => {
-  const { isOpen } = useContext(PlayerContext);
+  const { state } = useContext(PlayerContext);
+  const { isOpen } = state;
 
   const [{ loading, error, albums }, dispatch] = useReducer(reducer, {
     songs: [],
@@ -76,7 +77,11 @@ const Home = () => {
           <div className={isOpen ? 'suggestions' : 'suggestions closed'}>
             {albums?.map((album, i) => {
               return (
-                <Link key={i} to="/album" className="suggestion">
+                <Link
+                  key={i}
+                  to={`/albums/${album._id}`}
+                  className="suggestion"
+                >
                   <img src={album.coverImg} alt="" />
                   <div className="suggestionName">{album.title}</div>
                   <div className="iconContainer">

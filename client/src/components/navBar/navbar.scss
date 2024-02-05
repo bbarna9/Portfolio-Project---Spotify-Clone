@@ -9,6 +9,10 @@
   margin-bottom: 100px;
   z-index: 999;
 
+  &.closed {
+    width: 74.5%;
+  }
+
   .left {
     display: flex;
     gap: 10px;

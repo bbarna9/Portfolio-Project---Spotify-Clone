@@ -5,7 +5,9 @@ import { useContext, useEffect, useState } from 'react';
 import { PlayerContext } from '../../Player';
 
 const RightSideBar = () => {
-  const { isOpen, dispatch } = useContext(PlayerContext);
+  const { state, dispatch } = useContext(PlayerContext);
+  const { isOpen, currentSong } = state;
+  const current = 'sef';
 
   const closeHandler = async (e) => {
     e.preventDefault();
@@ -16,8 +18,13 @@ const RightSideBar = () => {
     }
   };
 
+  // A FELTÉTELT ÁTÍRNI CURRENTSONGRA
   return (
-    <div className={isOpen ? 'rightsidebar' : 'rightsidebar closed'}>
+    <div
+      className={
+        current !== null && isOpen ? 'rightsidebar' : 'rightsidebar closed'
+      }
+    >
       <Scrollbars
         autoHide
         autoHideTimeout={1000}

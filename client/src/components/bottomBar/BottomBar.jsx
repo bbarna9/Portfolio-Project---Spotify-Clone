@@ -2,7 +2,7 @@ import { useContext, useState, useRef, useEffect } from 'react';
 import './bottomBar.scss';
 import WaveSurfer from 'wavesurfer.js';
 import { Link } from 'react-router-dom';
-import { PlayerContext } from '../../Player';
+import { PlayerContext } from '../../Player.jsx';
 
 import audioFile from '../../assets/Audio.mp3';
 
@@ -47,7 +47,13 @@ const BottomBar = () => {
     volumePower = 'icon fa-solid fa-volume-xmark';
   }
 
-  const { isOpen, dispatch } = useContext(PlayerContext);
+  const { state, dispatch } = useContext(PlayerContext);
+  const { isOpen, currentSong } = state;
+  const current = 'wer';
+
+  const url =
+    'https://firebasestorage.googleapis.com/v0/b/spotify-43243.appspot.com/o/Audio.mp3?alt=media&token=c411deb2-391d-4e25-80a2-e3bb87500f67';
+
   const [visible, setVisible] = useState(isOpen);
 
   const sidebarHandler = async (e) => {
@@ -64,7 +70,7 @@ const BottomBar = () => {
     const options = formWaveSurferOptions(waveformRef.current);
     wavesurfer.current = WaveSurfer.create(options);
     const loader = async () => {
-      await wavesurfer.current.load(audioFile, [0, 0]);
+      await wavesurfer.current.load(url);
     };
 
     loader();
@@ -72,7 +78,8 @@ const BottomBar = () => {
     wavesurfer.current.on('ready', () => {
       setVolume(wavesurfer.current.getVolume());
       setDuration(wavesurfer.current.getDuration());
-      setAudioFileName(audioFile.split('/').pop());
+      //setAudioFileName(audioFile.split('/').pop());
+      setAudioFileName('Novacandy');
     });
 
     wavesurfer.current.on('audioprocess', () => {
@@ -103,21 +110,26 @@ const BottomBar = () => {
     volumePower = volume;
   };
 
+  // A FELTÉTELT ÁTÍRNI CURRENTSONGRA
   return (
     <div className={isOpen ? 'bottombar opened' : 'bottombar closed'}>
       <div className="left">
-        <Link to="/album">
-          <img
-            src="https://m.media-amazon.com/images/I/91rgNXHkQCL._UF1000,1000_QL80_.jpg"
-            alt="album"
-          />
-        </Link>
+        {current === null ? (
+          ''
+        ) : (
+          <Link to="/album">
+            <img
+              src="https://m.media-amazon.com/images/I/91rgNXHkQCL._UF1000,1000_QL80_.jpg"
+              alt="album"
+            />
+          </Link>
+        )}
         <div className="info">
           <Link to="/album" className="title">
-            {audioFileName}
+            {current !== null ? audioFileName : ''}
           </Link>
           <Link to="/author" className="singer">
-            Post Malone
+            {current !== null ? 'Post Malone' : ''}
           </Link>
         </div>
       </div>
@@ -140,11 +152,9 @@ const BottomBar = () => {
         <div className="bottom">
           <span className="length">{formatTime(currentTime)}</span>
           <div className="progressContainer">
-            <div
-              id="waveform"
-              ref={waveformRef}
-              style={{ width: '100%' }}
-            ></div>
+            <div id="waveform" ref={waveformRef} style={{ width: '100%' }}>
+              <div className="cheatLine"></div>
+            </div>
             {/* <div className="progressBar">
               <div className="progress"></div>
             </div>

@@ -1,5 +1,6 @@
 import express from 'express';
 import Album from '../models/Album.js';
+import { isAdmin, verify } from '../utils.js';
 
 const router = express.Router();
 
@@ -34,10 +35,11 @@ router.get('/', async (req, res) => {
 
 // GET ALBUM BY ID
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', verify, async (req, res) => {
   try {
-    const album = await Album.findById(req.parans.id);
+    const album = await Album.findById(req.params.id);
     if (album) {
+      console.log(album._id);
       res.send(album);
     } else {
       res.status(404).send({ message: 'Album not found.' });
@@ -49,7 +51,7 @@ router.get('/:id', async (req, res) => {
 
 // GET ALBUMS BY AUTHOR
 
-router.get('author/:authorKey', async (req, res) => {
+router.get('author/:authorKey', verify, async (req, res) => {
   try {
     const albums = await Album.find({
       authorKey: req.parans.authorKey,
@@ -66,7 +68,7 @@ router.get('author/:authorKey', async (req, res) => {
 
 // ADD ALBUM
 
-router.post('/', async (req, res) => {
+router.post('/', verify, isAdmin, async (req, res) => {
   const newAlbum = new Album(req.body);
   try {
     const savedAlbum = await newAlbum.save();

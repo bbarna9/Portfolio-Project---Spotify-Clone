@@ -1,5 +1,8 @@
-const router = require('express').Router();
-const Author = require('../models/Author');
+import express from 'express';
+import Author from '../models/Author.js';
+import { isAdmin, verify } from '../utils.js';
+
+const router = express.Router();
 
 // GET ALL AUTHORS
 
@@ -14,7 +17,7 @@ router.get('/', async (req, res) => {
 
 // GET A SINGLE AUTHOR
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', verify, async (req, res) => {
   const author = await Author.findById(req.params.id);
   if (author) {
     res.send(author);
@@ -25,7 +28,7 @@ router.get('/:id', async (req, res) => {
 
 // ADD AN AUTHOR
 
-router.post('/', async (req, res) => {
+router.post('/', verify, isAdmin, async (req, res) => {
   const newAuthor = new Author(req.body);
   try {
     const savedAuthor = await newAuthor.save();

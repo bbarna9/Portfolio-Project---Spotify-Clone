@@ -1,11 +1,17 @@
+import { useContext } from 'react';
 import './navbar.scss';
 import { Link, useNavigate } from 'react-router-dom';
+import { PlayerContext } from '../../Player';
 
 const Navbar = () => {
+  const { state } = useContext(PlayerContext);
+  const { isOpen, userInfo, currentSong } = state;
+  const current = 'se';
   const navigate = useNavigate();
 
+  // A FELTÉTELT ÁTÍRNI CURRENTSONGRA
   return (
-    <div className="navbar">
+    <div className={current !== null && isOpen ? 'navbar' : 'navbar closed'}>
       <div className="left">
         <i
           className="icon fa-solid fa-chevron-left"
@@ -20,10 +26,11 @@ const Navbar = () => {
         <i className="icon fa-regular fa-bell"></i>
         <i className="icon fa-solid fa-users"></i>
         <Link to="/profile">
-          <img
-            src="https://pbs.twimg.com/media/FxpRR74XoAElTfH?format=jpg&name=small"
-            alt=""
-          />
+          {userInfo?.profilePic !== '' ? (
+            <img src={userInfo?.profilePic} alt="" />
+          ) : (
+            <i className="icon fa-solid fa-user"></i>
+          )}
         </Link>
       </div>
     </div>
