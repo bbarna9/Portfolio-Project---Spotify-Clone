@@ -36,7 +36,7 @@ const reducer = (state, action) => {
   }
 };
 
-export const PlayerState = (props) => {
+export const MusicContextProvider = (props) => {
   const initialState = {
     currentSong: 0,
     songslist: song_list,

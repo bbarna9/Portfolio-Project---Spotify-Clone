@@ -14,6 +14,13 @@ export const song_list = [
       'https://files.freemusicarchive.org/storage-freemusicarchive-org/music/MusOpen/Skidmore_College_Orchestra/Mussorgskys_Pictures_at_an_Exhibition/Skidmore_College_Orchestra_-_02_-_I_Gnomus_Vivo.mp3',
   },
   {
+    title: 'Novacandy',
+    artistName: 'Post Malone',
+    albumTitle: "Mussorgsky's Pictures at an Exhibition",
+    fileUrl:
+      'https://firebasestorage.googleapis.com/v0/b/spotify-43243.appspot.com/o/Audio.mp3?alt=media&token=c411deb2-391d-4e25-80a2-e3bb87500f67',
+  },
+  {
     title: 'Promenade Moderato comodo e con delicatezza',
     artistName: 'Skidmore College Orchestra',
     albumTitle: "Mussorgsky's Pictures at an Exhibition",
@@ -104,4 +111,4 @@ export const song_list = [
     fileUrl:
       'https://files.freemusicarchive.org/storage-freemusicarchive-org/music/MusOpen/Skidmore_College_Orchestra/Mussorgskys_Pictures_at_an_Exhibition/Skidmore_College_Orchestra_-_15_-_X_La_grande_porte_de_Kiev_Allegro_alla_breve_Maestoso_Con_gran.mp3',
   },
-]
+];
