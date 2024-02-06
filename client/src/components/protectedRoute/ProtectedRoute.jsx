@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Navigate } from 'react-router-dom';
-import { PlayerContext } from '../../Player';
+import { PlayerContext } from '../../context/Player';
 
 export default function ProtectedRoute({ children }) {
   const { state } = useContext(PlayerContext);

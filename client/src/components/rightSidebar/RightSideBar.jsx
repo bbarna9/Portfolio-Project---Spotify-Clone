@@ -2,7 +2,7 @@ import Scrollbars from 'react-custom-scrollbars';
 import './rightSideBar.scss';
 import { Link } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
-import { PlayerContext } from '../../Player';
+import { PlayerContext } from '../../context/Player';
 
 const RightSideBar = () => {
   const { state, dispatch } = useContext(PlayerContext);

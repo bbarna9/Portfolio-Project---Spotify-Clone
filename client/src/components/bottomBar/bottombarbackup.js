@@ -1,7 +1,7 @@
 import { useContext, useState, useRef } from 'react';
 import './bottomBar.scss';
 import { Link } from 'react-router-dom';
-import { PlayerContext } from '../../Player';
+import { PlayerContext } from '../../context/Player';
 
 const BottomBar = () => {
   const play = false;

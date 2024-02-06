@@ -2,7 +2,7 @@ import './login.scss';
 import Navbar from '../../components/navBar/Navbar';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
-import { PlayerContext } from '../../Player';
+import { PlayerContext } from '../../context/Player';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 

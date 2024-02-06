@@ -7,6 +7,7 @@ const INITIAL_STATE = {
     : null,
   isOpen: true,
   currentSong: null,
+  playlist: false,
 };
 
 export const PlayerContext = createContext();
@@ -28,6 +29,14 @@ function reducer(state, action) {
         return { ...state, isOpen: false };
       } else {
         return { ...state, isOpen: true };
+      }
+    }
+    case 'PLAYLIST_TOGGLE': {
+      const res = state.playlist;
+      if (res === false) {
+        return { ...state, playlist: true };
+      } else {
+        return { ...state, playlist: false };
       }
     }
     case 'PICK_SONG':

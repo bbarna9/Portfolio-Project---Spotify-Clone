@@ -5,6 +5,7 @@ import RightSideBar from './components/rightSidebar/RightSideBar';
 import Album from './pages/Album/Album';
 import AddAlbum from './pages/AddAlbum/AddAlbum';
 import Author from './pages/Author/Author';
+import Admin from './pages/Admin/Admin';
 import AddAuthor from './pages/AddAuthor/AddAuthor';
 import Home from './pages/Home/Home';
 import {
@@ -19,6 +20,7 @@ import AddSong from './pages/AddSong/AddSong';
 import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
 import ProtectedRoute from './components/protectedRoute/ProtectedRoute';
+import Playlist from './pages/Playlist/Playlist';
 
 function App() {
   const Layout = () => {
@@ -76,6 +78,14 @@ function App() {
         {
           path: '/register',
           element: <Register />,
+        },
+        {
+          path: '/admin',
+          element: <Admin />,
+        },
+        {
+          path: '/playlist',
+          element: <Playlist />,
         },
       ],
     },

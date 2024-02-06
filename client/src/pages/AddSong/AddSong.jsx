@@ -4,51 +4,77 @@ import { Link } from 'react-router-dom';
 import { useReducer, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
-const reducer = (state, action) => {
-  switch (action.type) {
-    case 'CREATE_SONG_REQUEST':
-      return { ...state, loadingCreate: true };
-    case 'CREATE_SONG_SUCCESS':
-      return { ...state, loadingCreate: false };
-    case 'CREATE_SONG_FAILURE':
-      return { ...state, loadingCreate: false };
-  }
-};
+import storage from '../../firebase.js';
 
 const AddSong = () => {
   const [song, setSong] = useState(null);
-  const [title, setTitle] = useState(null);
-  const [author, setAuthor] = useState(null);
-  const [authorKey, setAuthorKey] = useState(null);
-  const [albumKey, setAlbumKey] = useState(null);
-  const [length, setLength] = useState(null);
-  const [listens, setListens] = useState(null);
-  const [genre, setGenre] = useState(null);
   const [coverImg, setCoverImg] = useState(null);
   const [link, setLink] = useState(null);
+  const [uploaded, setUploaded] = useState(0);
+  const [uploading, setUploading] = useState(false);
 
   const navigate = useNavigate();
-
-  const [{ loadingCreate }, dispatch] = useReducer(reducer, {});
 
   const handleChange = (e) => {
     const value = e.target.value;
     setSong({ ...song, [e.target.name]: value });
   };
 
+  const upload = (items) => {
+    items.forEach((item) => {
+      const fileName = new Date().getTime() + item.label + item.file.name;
+      const uploadTask = storage.ref(`/items/${fileName}`).put(item.file);
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log('Upload is ' + progress + ' % done.');
+        },
+        (error) => {
+          console.log(error);
+        },
+        () => {
+          uploadTask.snapshot.ref.getDownloadURL().then((url) => {
+            setSong((prev) => {
+              return { ...prev, [item.label]: url };
+            });
+            setUploaded((prev) => prev + 1);
+            console.log('Befejeződött a feltöltés');
+            setUploading(false);
+          });
+        }
+      );
+    });
+  };
+
+  const handleUpload = (e) => {
+    console.log('Megkezdődik a feltöltés');
+    setUploading(true);
+    e.preventDefault();
+    upload([
+      { file: coverImg, label: 'coverImg' },
+      { file: link, label: 'link' },
+    ]);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch({ type: 'CREATE_SONG_REQUEST' });
     try {
       const { data } = await axios.post(
         'http://localhost:3000/api/songs',
-        song
+        song,
+        {
+          headers: {
+            token:
+              'Bearer: ' +
+              JSON.parse(localStorage.getItem('userInfo')).accessToken,
+          },
+        }
       );
-      dispatch({ type: 'CREATE_SONG_SUCCESS' });
       navigate('/');
     } catch (err) {
-      dispatch({ type: 'CREATE_SONG_FAILURE' });
+      console.log(err);
       navigate('/');
     }
   };
@@ -87,11 +113,15 @@ const AddSong = () => {
               />
               <label>Cover Image</label>
               <input
-                type="text"
+                type="file"
                 placeholder="Cover Image"
                 name="coverImg"
-                onChange={handleChange}
+                id="coverImg"
+                onChange={(e) => setCoverImg(e.target.files[0])}
               />
+              <label className="fileLabel" htmlFor="coverImg">
+                <i className="icon fa-solid fa-arrow-up-from-bracket fa-2x"></i>
+              </label>
             </div>
             <div className="center">
               <label>Author</label>
@@ -131,19 +161,33 @@ const AddSong = () => {
                 name="listens"
                 onChange={handleChange}
               />
-              <label>Audio Link</label>
+              <label>Audio File</label>
               <input
-                type="text"
-                placeholder="Audio Link"
+                type="file"
+                placeholder="Audio File"
                 name="link"
-                onChange={handleChange}
+                id="link"
+                onChange={(e) => setLink(e.target.files[0])}
               />
+              <label htmlFor="link" className="fileLabel">
+                <i className="icon fa-solid fa-arrow-up-from-bracket fa-2x"></i>
+              </label>
             </div>
           </div>
           <div className="bottom">
-            <button className="submitBtn" onClick={handleSubmit}>
-              Submit
-            </button>
+            {uploaded === 2 ? (
+              <button className="submitBtn" onClick={handleSubmit}>
+                Create
+              </button>
+            ) : (
+              <button
+                className="submitBtn"
+                onClick={handleUpload}
+                disabled={uploading ? true : false}
+              >
+                Upload
+              </button>
+            )}
           </div>
         </form>
       </div>

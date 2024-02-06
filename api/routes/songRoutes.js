@@ -49,8 +49,9 @@ router.get('/author/:authorKey', verify, async (req, res) => {
 
 // ADD SONG
 
-router.post('/', verify, isAdmin, async (req, res) => {
+router.post('/', verify, async (req, res) => {
   const newSong = new Song(req.body);
+  console.log(req.user.isAdmin);
   try {
     const savedSong = await newSong.save();
     res.status(201).json(savedSong);

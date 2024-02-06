@@ -234,6 +234,14 @@
       }
     }
 
+    .plist {
+      color: #9c9c9c;
+
+      &.active {
+        color: #1ed760;
+      }
+    }
+
     .volumeProgress {
       display: flex;
       height: 100%;

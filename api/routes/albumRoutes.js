@@ -54,7 +54,7 @@ router.get('/:id', verify, async (req, res) => {
 router.get('author/:authorKey', verify, async (req, res) => {
   try {
     const albums = await Album.find({
-      authorKey: req.parans.authorKey,
+      authorKey: req.params.authorKey,
     });
     if (albums) {
       res.send(albums);

@@ -38,6 +38,7 @@
       display: flex;
       flex-direction: column;
       position: relative;
+      justify-content: center;
 
       .title {
         font-size: 72px;
@@ -56,21 +57,6 @@
           font-family: 'Montserrat', sans-serif;
           font-weight: 600;
           padding: 15px;
-        }
-
-        select {
-          height: 50px;
-          border-radius: 5px;
-          border: none;
-          background-color: #313131;
-          padding-left: 20px;
-          color: white;
-          font-family: 'Montserrat', sans-serif;
-          font-weight: 600;
-
-          &.subscribed {
-            background-color: #1ed760;
-          }
         }
       }
     }
@@ -169,6 +155,25 @@
               color: white;
             }
           }
+
+          input[type='file'] {
+            display: none;
+          }
+
+          .fileLabel {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 50px;
+            border-radius: 5px;
+            border: none;
+            background-color: #313131;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            margin: 0;
+            padding: 1px;
+          }
         }
       }
 
@@ -179,13 +184,11 @@
         align-items: center;
 
         .submitBtn {
-          margin-top: 30px;
           height: 50px;
           width: 100%;
           border-radius: 5px;
           border: none;
           background-color: #313131;
-          padding: 10px;
           color: white;
           font-family: 'Montserrat', sans-serif;
           font-weight: 600;
@@ -194,6 +197,53 @@
           &:hover {
             background-color: #1ed760;
             cursor: pointer;
+          }
+        }
+
+        .selectContainer {
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+          margin-bottom: 30px;
+
+          label {
+            margin: 15px 0;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+          }
+
+          select {
+            min-height: 100px;
+            max-height: 200px;
+            border-radius: 5px;
+            border: none;
+            padding: 5px;
+            background-color: #313131;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            overflow-y: scroll;
+
+            &.subscribed {
+              background-color: #1ed760;
+            }
+
+            option {
+              color: white;
+              font-weight: 600;
+              margin: 5px;
+              padding: 10px;
+              padding-left: 20px;
+              border-radius: 5px;
+
+              &:checked {
+                background-color: #7f7f7f;
+              }
+            }
+
+            &::-webkit-scrollbar {
+              display: none;
+            }
           }
         }
       }

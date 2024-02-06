@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import './featuredItem.scss';
 import PropTypes from 'prop-types';
-import { PlayerContext } from '../../Player';
+import { PlayerContext } from '../../context/Player';
 import { useContext } from 'react';
 
 const FeaturedItem = (props) => {

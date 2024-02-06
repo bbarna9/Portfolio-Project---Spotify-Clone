@@ -1,39 +1,30 @@
 import { useContext, useState, useRef, useEffect } from 'react';
 import './bottomBar.scss';
 import WaveSurfer from 'wavesurfer.js';
-import { Link } from 'react-router-dom';
-import { PlayerContext } from '../../Player.jsx';
+import { Link, useNavigate } from 'react-router-dom';
+import { PlayerContext } from '../../context/Player.jsx';
 
 import audioFile from '../../assets/Audio.mp3';
 import MusicContext from '../../context/MusicContext.jsx';
 
-const formWaveSurferOptions = (ref) => ({
-  container: ref,
-  waveColor: '#4d4d4d',
-  progressColor: '#1ed760',
-  cursorColor: 'white',
-  responsive: true,
-  height: 5,
-  normalize: false,
-  cursorWidth: 5,
-  backend: 'WebAudio',
-  dragToSeek: true,
-  fillParent: true,
-});
-
-function formatTime(seconds) {
-  let date = new Date(0);
-  date.setSeconds(seconds);
-  return date.toISOString().substr(14, 5);
-}
-
 const BottomBar = () => {
   const { state, dispatch } = useContext(PlayerContext);
   // const { isOpen, currentSong } = state;
-  const { isOpen } = state;
+  const { isOpen, playlist } = state;
   const current = 'wer';
 
+  const navigate = useNavigate();
+
   const [visible, setVisible] = useState(isOpen);
+  const [plist, setPlist] = useState(playlist);
+
+  useEffect(() => {
+    if (window.location.pathname === '/playlist') {
+      setPlist(true);
+    } else {
+      setPlist(false);
+    }
+  }, [plist, window.location.pathname]);
 
   const sidebarHandler = async (e) => {
     e.preventDefault();
@@ -42,6 +33,23 @@ const BottomBar = () => {
       setVisible(!visible);
     } catch (err) {
       console.log(err);
+    }
+  };
+
+  const playlistHandler = async (e) => {
+    e.preventDefault();
+    if (!plist) {
+      try {
+        dispatch({ type: 'PLAYLIST_TOGGLE' });
+        navigate('/playlist');
+        setPlist(!plist);
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      dispatch({ type: 'PLAYLIST_TOGGLE' });
+      navigate(-1);
+      setPlist(!plist);
     }
   };
 
@@ -215,7 +223,14 @@ const BottomBar = () => {
           onClick={sidebarHandler}
         ></i>
         <i className="icon fa-solid fa-microphone"></i>
-        <i className="icon fa-solid fa-bars"></i>
+        <i
+          className={
+            plist
+              ? 'plist active icon fa-solid fa-bars'
+              : 'plist icon fa-solid fa-bars'
+          }
+          onClick={playlistHandler}
+        ></i>
         <i className="icon fa-solid fa-computer"></i>
         <div className="volumeProgress">
           <i onClick={handleMute} className={volumePower}></i>

@@ -2,7 +2,7 @@ import { useContext, useEffect, useReducer } from 'react';
 import FeaturedItem from '../featuredItem/FeaturedItem';
 import './featuredList.scss';
 import axios from 'axios';
-import { PlayerContext } from '../../Player';
+import { PlayerContext } from '../../context/Player';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -54,7 +54,7 @@ const FeaturedList = () => {
         {loading
           ? 'Loading...'
           : lists
-              .slice(0, maxSize)
+              ?.slice(0, maxSize)
               .map((album, i) => (
                 <FeaturedItem
                   key={i}

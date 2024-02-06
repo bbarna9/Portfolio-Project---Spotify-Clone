@@ -2,7 +2,7 @@ import './profile.scss';
 import Navbar from '../../components/navBar/Navbar';
 import { Link } from 'react-router-dom';
 import { useContext, useState } from 'react';
-import { PlayerContext } from '../../Player';
+import { PlayerContext } from '../../context/Player';
 
 const Profile = () => {
   const subscribed = true;
@@ -57,14 +57,8 @@ const Profile = () => {
             <div className="right">
               <label>Username</label>
               <input type="text" placeholder="Username" value={username} />
-              <label>Subscription</label>
-              <button
-                className={subscribed ? 'subscribed' : ''}
-                onClick={(e) => handleClick}
-                disabled={subscribed ? true : false}
-              >
-                {subscribed ? 'Subscribed' : 'Manage subscription'}
-              </button>
+              <label>Manage</label>
+              <Link to="/admin">Manage content</Link>
             </div>
           </div>
           <div className="bottom"></div>

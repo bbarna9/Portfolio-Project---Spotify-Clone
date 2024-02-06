@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import './navbar.scss';
 import { Link, useNavigate } from 'react-router-dom';
-import { PlayerContext } from '../../Player';
+import { PlayerContext } from '../../context/Player';
 
 const Navbar = () => {
   const { state } = useContext(PlayerContext);
