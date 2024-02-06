@@ -19,6 +19,8 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(cors());
+
 app.use(express.json());
 app.use('/api/songs', songRoutes);
 app.use('/api/albums', albumRoutes);

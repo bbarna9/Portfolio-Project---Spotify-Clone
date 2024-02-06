@@ -6,6 +6,7 @@ import { PlayerContext } from '../../context/Player.jsx';
 
 import audioFile from '../../assets/Audio.mp3';
 import MusicContext from '../../context/MusicContext.jsx';
+import axios from 'axios';
 
 const BottomBar = () => {
   const { state, dispatch } = useContext(PlayerContext);
@@ -56,7 +57,6 @@ const BottomBar = () => {
   // Global State
   const {
     currentSong,
-    songs,
     nextSong,
     prevSong,
     repeat,
@@ -138,16 +138,15 @@ const BottomBar = () => {
         onEnded={handleEnd}
         ref={audio}
         type="audio/mpeg"
-        preload="true"
-        src={songslist[currentSong].fileUrl}
+        src={songslist.length != 0 ? songslist[currentSong].link : ''}
       />
       <div className="left">
-        {current === null ? (
+        {songslist.length === 0 ? (
           ''
         ) : (
           <Link to="/album">
             <img
-              src="https://m.media-amazon.com/images/I/91rgNXHkQCL._UF1000,1000_QL80_.jpg"
+              src={songslist.length != 0 ? songslist[currentSong].coverImg : ''}
               alt="album"
             />
           </Link>
@@ -155,11 +154,11 @@ const BottomBar = () => {
         <div className="info">
           <Link to="/album" className="title">
             {/* {current !== null ? audioFileName : ''} */}
-            {songslist[currentSong].title}
+            {songslist.length != 0 ? songslist[currentSong].title : ''}
           </Link>
           <Link to="/author" className="singer">
             {/* {current !== null ? 'Post Malone' : ''} */}
-            {songslist[currentSong].artistName}
+            {songslist.length != 0 ? songslist[currentSong].author : ''}
           </Link>
         </div>
       </div>
@@ -214,7 +213,10 @@ const BottomBar = () => {
               id="prgbar"
             />
           </div>
-          <span className="length">{fmtMSS(dur)}</span>
+          {/* <span className="length">{fmtMSS(dur)}</span> */}
+          <span className="length">
+            {songslist.length !== 0 ? songslist[currentSong].length : '0:00'}
+          </span>
         </div>
       </div>
       <div className="right">

@@ -3,11 +3,12 @@ import './rightSideBar.scss';
 import { Link } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 import { PlayerContext } from '../../context/Player';
+import MusicContext from '../../context/MusicContext';
 
 const RightSideBar = () => {
   const { state, dispatch } = useContext(PlayerContext);
-  const { isOpen, currentSong } = state;
-  const current = 'sef';
+  const { songslist, currentSong } = useContext(MusicContext);
+  const { isOpen } = state;
 
   const closeHandler = async (e) => {
     e.preventDefault();
@@ -22,7 +23,7 @@ const RightSideBar = () => {
   return (
     <div
       className={
-        current !== null && isOpen ? 'rightsidebar' : 'rightsidebar closed'
+        songslist.lenth !== 0 && isOpen ? 'rightsidebar' : 'rightsidebar closed'
       }
     >
       <Scrollbars
@@ -50,15 +51,12 @@ const RightSideBar = () => {
               <h3 className="albumTitle">AUSTIN</h3>
               <i className="close fa-solid fa-xmark" onClick={closeHandler}></i>
             </div>
-            <img
-              src="https://m.media-amazon.com/images/I/91rgNXHkQCL._UF1000,1000_QL80_.jpg"
-              alt=""
-            />
+            <img src={songslist[currentSong]?.coverImg} alt="" />
             <div className="bottom">
               <div className="left">
-                <h1 className="songTitle">Novacandy</h1>
+                <h1 className="songTitle">{songslist[currentSong]?.title}</h1>
                 <Link to="/author" className="infoSinger">
-                  Post Malone
+                  {songslist[currentSong]?.author}
                 </Link>
               </div>
               <div className="right">
@@ -76,7 +74,7 @@ const RightSideBar = () => {
             </div>
             <div className="bottom">
               <Link to="/author" className="name">
-                Post Malone
+                {songslist[currentSong]?.author}
               </Link>
               <div className="stats">
                 <span>59 807 389 hallgató havonta</span>

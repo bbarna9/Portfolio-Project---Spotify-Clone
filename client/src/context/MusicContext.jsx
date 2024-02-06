@@ -1,5 +1,6 @@
-import { createContext, useReducer } from 'react';
+import { createContext, useEffect, useReducer, useState } from 'react';
 import { song_list } from './songs';
+import axios from 'axios';
 
 const MusicContext = createContext();
 
@@ -8,7 +9,7 @@ const reducer = (state, action) => {
     case 'SET_SONGS_ARRAY':
       return {
         ...state,
-        songs: action.data,
+        songslist: action.data,
       };
     case 'SET_CURRENT_SONG':
       return {
@@ -54,7 +55,11 @@ export const MusicContextProvider = (props) => {
   const togglePlaying = () =>
     dispatch({ type: 'TOGGLE_PLAYING', data: state.playing ? false : true });
   // Set current song
-  const SetCurrent = (id) => dispatch({ type: 'SET_CURRENT_SONG', data: id });
+  const SetCurrent = (id) => {
+    dispatch({ type: 'SET_CURRENT_SONG', data: id });
+    console.log(state.currentSong);
+    console.log(state.songslist);
+  };
 
   // Prev song
   const prevSong = () => {

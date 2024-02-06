@@ -4,8 +4,9 @@ import './album.scss';
 import data from '../../albumData.json';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { Link } from 'react-router-dom';
-import { useEffect, useReducer } from 'react';
+import { useContext, useEffect, useReducer } from 'react';
 import axios from 'axios';
+import MusicContext from '../../context/MusicContext';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -19,13 +20,22 @@ const reducer = (state, action) => {
 };
 
 const Album = () => {
+  let { songsSet, currentSong, SetCurrent, songslist } =
+    useContext(MusicContext);
+
   const [{ loading, error, album }, dispatch] = useReducer(reducer, {
     album: {},
     loading: true,
     error: '',
   });
 
-  const playHandler = (id) => {};
+  const playHandler = (song) => {
+    //songslist.splice(0, songslist.length - 2);
+    const tempArr = [song];
+    songslist.push(song);
+    songsSet(songslist);
+    SetCurrent(songslist.length - 1);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,6 +51,8 @@ const Album = () => {
     fetchData();
   }, []);
 
+  console.log(album.themeColor);
+
   return (
     <div className="album">
       {loading ? (
@@ -49,7 +61,12 @@ const Album = () => {
         <>
           <Navbar />
           <div className="container">
-            <div className="mainContainer">
+            <div
+              className="mainContainer"
+              style={{
+                background: `linear-gradient(0deg, rgba(18, 18, 18, 1) 0%, rgba(18, 18, 18, 0.9080882352941176) 6%, ${album.themeColor} 100%)`,
+              }}
+            >
               <div className="header">
                 <div className="left">
                   <img src={album.coverImg} alt="" />
@@ -106,7 +123,7 @@ const Album = () => {
                             <div className="number">{id + 1}</div>
                             <i
                               className="playIcon fa-solid fa-play"
-                              onClick={playHandler(song._id)}
+                              onClick={() => playHandler(song)}
                             ></i>
                             <div className="info">
                               <div className="title">{song.title}</div>
