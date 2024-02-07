@@ -37,3 +37,5 @@ router.post('/', verify, isAdmin, async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+export default router;

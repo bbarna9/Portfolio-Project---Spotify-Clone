@@ -24,8 +24,6 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// REGISTER USER
-
 // UPDATE USER
 
 // DELETE USER

@@ -3,7 +3,7 @@ import FeaturedItem from '../../components/featuredItem/FeaturedItem';
 import './album.scss';
 import data from '../../albumData.json';
 import { Scrollbars } from 'react-custom-scrollbars';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useContext, useEffect, useReducer } from 'react';
 import axios from 'axios';
 import MusicContext from '../../context/MusicContext';
@@ -23,16 +23,20 @@ const Album = () => {
   let { songsSet, currentSong, SetCurrent, songslist } =
     useContext(MusicContext);
 
+  let currentAlbum;
+
   const [{ loading, error, album }, dispatch] = useReducer(reducer, {
     album: {},
     loading: true,
     error: '',
   });
 
+  const { key } = useParams();
+
   const playHandler = (song) => {
     //songslist.splice(0, songslist.length - 2);
-    const tempArr = [song];
     songslist.push(song);
+    localStorage.setItem('currentSong', JSON.stringify(song));
     songsSet(songslist);
     SetCurrent(songslist.length - 1);
   };
@@ -41,17 +45,23 @@ const Album = () => {
     const fetchData = async () => {
       dispatch({ type: 'FETCH_ALBUM_START' });
       try {
-        const result = await axios.get('http://localhost:3000/api/albums');
-        dispatch({ type: 'FETCH_ALBUM_SUCCESS', payload: result.data[0] });
-        console.log();
+        const result = await axios.get(
+          `http://localhost:3000/api/albums/key/${key}`,
+          {
+            headers: {
+              token:
+                'Bearer: ' +
+                JSON.parse(localStorage.getItem('userInfo')).accessToken,
+            },
+          }
+        );
+        dispatch({ type: 'FETCH_ALBUM_SUCCESS', payload: result.data });
       } catch (err) {
         dispatch({ type: 'FETCH_ALBUM_FAILURE', payload: error.message });
       }
     };
     fetchData();
   }, []);
-
-  console.log(album.themeColor);
 
   return (
     <div className="album">
@@ -75,12 +85,9 @@ const Album = () => {
                   <span className="type">Album</span>
                   <h1 className="albumTitle">{album.title}</h1>
                   <div className="bottomInfo">
-                    <img
-                      src="https://i.scdn.co/image/ab6761610000e5eb6be070445b03e0b63147c2c1"
-                      alt=""
-                    />
+                    <img src={album.authorKey[0].profileImg} alt="" />
                     <Link to="/author" className="singer">
-                      Post Malone{' '}
+                      {album.authorKey[0].name}{' '}
                     </Link>{' '}
                     •
                     <span className="date">

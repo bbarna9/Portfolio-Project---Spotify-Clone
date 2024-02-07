@@ -42,6 +42,7 @@ const Home = () => {
       try {
         const result = await axios.get('http://localhost:3000/api/albums');
         dispatch({ type: 'FETCH_ALBUMS_SUCCESS', payload: result.data });
+        console.log(albums);
       } catch (error) {
         dispatch({ type: 'FETCH_ALBUMS_FAIL', payload: error.message });
         console.log(error);
@@ -83,7 +84,7 @@ const Home = () => {
                   return (
                     <Link
                       key={i}
-                      to={`/albums/${album._id}`}
+                      to={`/albums/key/${album.key}`}
                       className="suggestion"
                     >
                       <img src={album.coverImg} alt="" />

@@ -58,7 +58,6 @@ export const MusicContextProvider = (props) => {
   const SetCurrent = (id) => {
     dispatch({ type: 'SET_CURRENT_SONG', data: id });
     console.log(state.currentSong);
-    console.log(state.songslist);
   };
 
   // Prev song

@@ -13,7 +13,7 @@ const FeaturedItem = (props) => {
 
   return (
     <Link
-      to={`/albums/${props._id}`}
+      to={`/albums/key/${props.albumKey}`}
       className={isOpen ? 'featuredItem' : 'featuredItem closed'}
     >
       <div className="top">

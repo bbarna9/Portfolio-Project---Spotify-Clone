@@ -59,7 +59,7 @@ const FeaturedList = () => {
                 <FeaturedItem
                   key={i}
                   img={album.coverImg}
-                  _id={album._id}
+                  albumKey={album.key}
                   title={album.title}
                   desc="Young Thug, A$AP Rocky, Lana Del Rey és még sokan mások"
                 />

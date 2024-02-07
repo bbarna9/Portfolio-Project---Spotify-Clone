@@ -44,7 +44,7 @@ function App() {
           element: <Home />,
         },
         {
-          path: '/albums/:id',
+          path: '/albums/key/:key',
           element: <Album />,
         },
         {

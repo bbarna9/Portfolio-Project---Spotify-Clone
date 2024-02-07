@@ -45,6 +45,7 @@ const AddAlbum = () => {
       }
     };
     fetchData();
+    // console.log(songs[0].albumKey[0].title);
   }, []);
 
   const upload = (items) => {
@@ -212,7 +213,7 @@ const AddAlbum = () => {
               <select multiple name="songs" onChange={handleSelect}>
                 {songs.map((song) => (
                   <option key={song._id} value={song._id}>
-                    {song.author} - {song.albumKey} - {song.title}
+                    {song.author} - {song.title}
                   </option>
                 ))}
               </select>

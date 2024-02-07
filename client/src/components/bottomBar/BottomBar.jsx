@@ -1,4 +1,4 @@
-import { useContext, useState, useRef, useEffect } from 'react';
+import { useContext, useState, useRef, useEffect, useReducer } from 'react';
 import './bottomBar.scss';
 import WaveSurfer from 'wavesurfer.js';
 import { Link, useNavigate } from 'react-router-dom';
@@ -8,9 +8,26 @@ import audioFile from '../../assets/Audio.mp3';
 import MusicContext from '../../context/MusicContext.jsx';
 import axios from 'axios';
 
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'FETCH_SONG_START':
+      return { ...state, loading: true };
+    case 'FETCH_SONG_SUCCESS':
+      return { ...state, song: action.payload, loading: false };
+    case 'FETCH_SONG_FAILURE':
+      return { ...state, loading: false, error: action.payload };
+  }
+};
+
 const BottomBar = () => {
-  const { state, dispatch } = useContext(PlayerContext);
+  const { state, ctxDispatch } = useContext(PlayerContext);
   // const { isOpen, currentSong } = state;
+  const [{ loading, error, song }, dispatch] = useReducer(reducer, {
+    songs: [],
+    loading: true,
+    error: '',
+  });
+
   const { isOpen, playlist } = state;
   const current = 'wer';
 
@@ -30,7 +47,7 @@ const BottomBar = () => {
   const sidebarHandler = async (e) => {
     e.preventDefault();
     try {
-      dispatch({ type: 'SIDEBAR_TOGGLE' });
+      ctxDispatch({ type: 'SIDEBAR_TOGGLE' });
       setVisible(!visible);
     } catch (err) {
       console.log(err);
@@ -41,14 +58,14 @@ const BottomBar = () => {
     e.preventDefault();
     if (!plist) {
       try {
-        dispatch({ type: 'PLAYLIST_TOGGLE' });
+        ctxDispatch({ type: 'PLAYLIST_TOGGLE' });
         navigate('/playlist');
         setPlist(!plist);
       } catch (err) {
         console.log(err);
       }
     } else {
-      dispatch({ type: 'PLAYLIST_TOGGLE' });
+      ctxDispatch({ type: 'PLAYLIST_TOGGLE' });
       navigate(-1);
       setPlist(!plist);
     }
@@ -123,11 +140,30 @@ const BottomBar = () => {
 
   useEffect(() => {
     audio.current.volume = statevolum;
+    const pickedSong = JSON.parse(localStorage.getItem('currentSong'));
+    console.log(pickedSong);
+    console.log(songslist[currentSong]);
     if (playing) {
       toggleAudio();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentSong]);
+
+  /* useEffect(() => {
+    const fetchData = async () => {
+      dispatch({ type: 'FETCH_ALBUM_START' });
+      try {
+        const result = await axios.get(
+          `http://localhost:3000/api/songs/${pickedSong._id}`
+        );
+        dispatch({ type: 'FETCH_SONG_SUCCESS', payload: result.data });
+        console.log(result.data);
+      } catch (err) {
+        dispatch({ type: 'FETCH_SONG_FAILURE', payload: error.message });
+      }
+    };
+    fetchData();
+  }, []); */
 
   // A FELTÉTELT ÁTÍRNI CURRENTSONGRA
   return (
@@ -144,7 +180,7 @@ const BottomBar = () => {
         {songslist.length === 0 ? (
           ''
         ) : (
-          <Link to="/album">
+          <Link to={`/albums/key/${songslist[currentSong].albumKey}`}>
             <img
               src={songslist.length != 0 ? songslist[currentSong].coverImg : ''}
               alt="album"
@@ -152,7 +188,10 @@ const BottomBar = () => {
           </Link>
         )}
         <div className="info">
-          <Link to="/album" className="title">
+          <Link
+            to={`/albums/key/${songslist[currentSong].albumKey}`}
+            className="title"
+          >
             {/* {current !== null ? audioFileName : ''} */}
             {songslist.length != 0 ? songslist[currentSong].title : ''}
           </Link>

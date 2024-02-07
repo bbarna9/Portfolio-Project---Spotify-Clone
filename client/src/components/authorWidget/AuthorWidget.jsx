@@ -1,8 +1,9 @@
 import axios from 'axios';
 import './authorWidget.scss';
 import { useEffect, useReducer } from 'react';
+import { Link } from 'react-router-dom';
 
-/* const reducer = (state, action) => {
+const reducer = (state, action) => {
   switch (action.type) {
     case 'FETCH_AUTHORS_START':
       return { ...state, loading: true };
@@ -11,10 +12,10 @@ import { useEffect, useReducer } from 'react';
     case 'FETCH_AUTHORS_FAILURE':
       return { ...state, loading: false, error: action.payload };
   }
-}; */
+};
 
 const AuthorWidget = () => {
-  /* const [{ loading, error, authors }, dispatch] = useReducer(reducer, {
+  const [{ loading, error, authors }, dispatch] = useReducer(reducer, {
     authors: [],
     loading: true,
     error: '',
@@ -32,13 +33,16 @@ const AuthorWidget = () => {
       }
     };
     fetchData();
-  }, []); */
+  }, []);
 
-  //return loading ? 'Loading...' : <div>AuthorWidget</div>;
-  return <div>AuthorWidget</div>;
-
-  /* <div className="albumwidget">
-      <h1 className="widgetTitle">Authors</h1>
+  return loading ? (
+    'Loading...'
+  ) : (
+    <div className="albumwidget">
+      <div className="head">
+        <h1 className="widgetTitle">Authors</h1>
+        <Link to="/addauthor">Add Author</Link>
+      </div>
       <div className="list">
         <div className="thead">
           <div className="left">
@@ -59,13 +63,13 @@ const AuthorWidget = () => {
                     <div className="number">{id + 1}</div>
                     <i className="playIcon fa-solid fa-play"></i>
                     <div className="info">
-                      <div className="title">{author.title}</div>
+                      <div className="title">{author.name}</div>
                     </div>
                   </div>
                   <div className="right">
-                    <div className="singer">{author.author}</div>
+                    <div className="singer">{author.listeners}</div>
                     <div className="end">
-                      <div className="length">{author.length}</div>
+                      <div className="length">{author.genre}</div>
                       <i className="icon more fa-solid fa-ellipsis fa-2x"></i>
                     </div>
                   </div>
@@ -73,7 +77,8 @@ const AuthorWidget = () => {
               ))}
         </div>
       </div>
-    </div> */
+    </div>
+  );
 };
 
 export default AuthorWidget;

@@ -9,11 +9,25 @@
   );
   border-radius: 8px;
 
-  .widgetTitle {
-    font-size: 22px;
-    margin: 20px;
-    padding-left: 20px;
-    padding-top: 30px;
+  .head {
+    padding: 30px;
+    margin: 0;
+
+    .widgetTitle {
+      font-size: 22px;
+    }
+
+    a {
+      text-decoration: none;
+      color: white;
+      font-weight: 600;
+      font-size: 16px;
+
+      &:hover {
+        text-decoration: underline;
+        text-decoration-thickness: 1.5px;
+      }
+    }
   }
 
   .list {

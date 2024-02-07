@@ -26,6 +26,14 @@ router.get('/', async (req, res) => {
           as: 'songs',
         },
       },
+      {
+        $lookup: {
+          from: 'authors',
+          localField: 'authorKey',
+          foreignField: 'key',
+          as: 'authorKey',
+        },
+      },
     ]);
     res.send(albums);
   } catch (err) {
@@ -37,10 +45,60 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', verify, async (req, res) => {
   try {
-    const album = await Album.findById(req.params.id);
+    const album = await Album.aggregate([
+      { $match: { $expr: { $eq: ['$_id', { $toObjectId: req.params.id }] } } },
+      {
+        $lookup: {
+          from: 'songs', // collection name in db
+          localField: 'key',
+          foreignField: 'albumKey',
+          as: 'songs',
+        },
+      },
+      {
+        $lookup: {
+          from: 'authors',
+          localField: 'authorKey',
+          foreignField: 'key',
+          as: 'authorKey',
+        },
+      },
+    ]);
     if (album) {
-      console.log(album._id);
-      res.send(album);
+      res.send(album[0]);
+    } else {
+      res.status(404).send({ message: 'Album not found.' });
+    }
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+// GET ALBUMS BY KEY
+
+router.get('/key/:key', verify, async (req, res) => {
+  try {
+    const album = await Album.aggregate([
+      { $match: { key: req.params.key } },
+      {
+        $lookup: {
+          from: 'songs', // collection name in db
+          localField: 'key',
+          foreignField: 'albumKey',
+          as: 'songs',
+        },
+      },
+      {
+        $lookup: {
+          from: 'authors',
+          localField: 'authorKey',
+          foreignField: 'key',
+          as: 'authorKey',
+        },
+      },
+    ]);
+    if (album) {
+      res.send(album[0]);
     } else {
       res.status(404).send({ message: 'Album not found.' });
     }

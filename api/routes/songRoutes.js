@@ -8,7 +8,24 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
   try {
-    const songs = await Song.find();
+    const songs = await Song.aggregate([
+      {
+        $lookup: {
+          from: 'albums',
+          localField: 'albumKey',
+          foreignField: 'key',
+          as: 'albumKey',
+        },
+      },
+      {
+        $lookup: {
+          from: 'authors',
+          localField: 'authorKey',
+          foreignField: 'key',
+          as: 'authorKey',
+        },
+      },
+    ]);
     res.send(songs);
   } catch (err) {
     res.status(500).json(err);
@@ -19,9 +36,28 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', verify, async (req, res) => {
   try {
-    const song = await Song.findById(req.params.id);
+    const song = await Song.aggregate([
+      { $match: { $expr: { $eq: ['$_id', { $toObjectId: req.params.id }] } } },
+      {
+        $lookup: {
+          from: 'albums',
+          localField: 'albumKey',
+          foreignField: 'key',
+          as: 'albumKey',
+        },
+      },
+      {
+        $lookup: {
+          from: 'authors',
+          localField: 'authorKey',
+          foreignField: 'key',
+          as: 'authorKey',
+        },
+      },
+    ]);
+    //const song = await Song.findById(req.params.id);
     if (song) {
-      res.send(song);
+      res.send(song[0]);
     } else {
       res.status(404).send({ message: 'Song not found.' });
     }

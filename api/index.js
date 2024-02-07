@@ -6,7 +6,7 @@ import songRoutes from './routes/songRoutes.js';
 import albumRoutes from './routes/albumRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import userRoutes from './routes/userRoutes.js';
-// import authorRoutes from './routes/authorRoutes';
+import authorRoutes from './routes/authorRoutes.js';
 
 const app = express();
 
@@ -24,7 +24,7 @@ app.use(cors());
 app.use(express.json());
 app.use('/api/songs', songRoutes);
 app.use('/api/albums', albumRoutes);
-// app.use('/api/authors', authorRoutes);
+app.use('/api/authors', authorRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 
