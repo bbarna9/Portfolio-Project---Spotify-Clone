@@ -3,7 +3,7 @@ import FeaturedList from '../../components/featuredList/FeaturedList';
 import Navbar from '../../components/navBar/Navbar';
 import './home.scss';
 import { Scrollbars } from 'react-custom-scrollbars';
-import { useContext, useEffect, useReducer } from 'react';
+import { useContext, useEffect, useReducer, useState } from 'react';
 import axios from 'axios';
 import { PlayerContext } from '../../context/Player';
 
@@ -30,6 +30,8 @@ const Home = () => {
   const { state } = useContext(PlayerContext);
   const { isOpen } = state;
 
+  const [isScrolled, setIsScrolled] = useState(false);
+
   const [{ loading, error, albums }, dispatch] = useReducer(reducer, {
     songs: [],
     loading: true,
@@ -42,7 +44,6 @@ const Home = () => {
       try {
         const result = await axios.get('http://localhost:3000/api/albums');
         dispatch({ type: 'FETCH_ALBUMS_SUCCESS', payload: result.data });
-        console.log(albums);
       } catch (error) {
         dispatch({ type: 'FETCH_ALBUMS_FAIL', payload: error.message });
         console.log(error);
@@ -51,14 +52,20 @@ const Home = () => {
     fetchData();
   }, []);
 
+  const handleScroll = (event) => {
+    setIsScrolled(event.currentTarget.scrollTop === 0 ? false : true);
+    console.log(isScrolled);
+  };
+
   return (
     <div className="home">
       {loading ? (
         'Loading...'
       ) : (
         <>
-          <Navbar />
+          <Navbar isScrolled={isScrolled} />
           <Scrollbars
+            onScroll={handleScroll}
             autoHide
             autoHideTimeout={1000}
             autoHideDuration={300}

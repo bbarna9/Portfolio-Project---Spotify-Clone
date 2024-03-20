@@ -11,12 +11,13 @@
   );
   border-radius: 8px;
   overflow: scroll;
-  padding-top: 40px;
   margin-right: 0;
   padding-right: 0;
   position: relative;
 
   .homeHeader {
+    padding-top: 40px;
+
     .greeting {
       padding-left: 20px;
       font-size: 30px;

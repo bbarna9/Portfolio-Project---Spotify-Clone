@@ -4,7 +4,7 @@ import './album.scss';
 import data from '../../albumData.json';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { Link, useParams } from 'react-router-dom';
-import { useContext, useEffect, useReducer } from 'react';
+import { useContext, useEffect, useReducer, useState } from 'react';
 import axios from 'axios';
 import MusicContext from '../../context/MusicContext';
 
@@ -24,6 +24,10 @@ const Album = () => {
     useContext(MusicContext);
 
   let currentAlbum;
+
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  const [liked, setLiked] = useState(false);
 
   const [{ loading, error, album }, dispatch] = useReducer(reducer, {
     album: {},
@@ -63,14 +67,18 @@ const Album = () => {
     fetchData();
   }, []);
 
+  const handleScroll = (event) => {
+    setIsScrolled(event.currentTarget.scrollTop === 0 ? false : true);
+  };
+
   return (
     <div className="album">
       {loading ? (
         'Loading...'
       ) : (
         <>
-          <Navbar />
-          <div className="container">
+          <Navbar isScrolled={isScrolled} />
+          <div className="container" onScroll={handleScroll}>
             <div
               className="mainContainer"
               style={{
@@ -85,11 +93,24 @@ const Album = () => {
                   <span className="type">Album</span>
                   <h1 className="albumTitle">{album.title}</h1>
                   <div className="bottomInfo">
-                    <img src={album.authorKey[0].profileImg} alt="" />
-                    <Link to="/author" className="singer">
-                      {album.authorKey[0].name}{' '}
-                    </Link>{' '}
-                    •
+                    {/* 
+                  
+                    {userInfo?.profilePic !== '' ? (
+                      <img src={userInfo?.profilePic} alt="" />
+                    ) : (
+                      <i className="icon fa-solid fa-user"></i>
+                    )}
+
+                   */}
+                    {album.authorKey[0]?.profileImg && (
+                      <img src={album.authorKey[0].profileImg} alt="" />
+                    )}
+                    {album.authorKey[0]?.name && (
+                      <Link to="/author" className="singer">
+                        {album.authorKey[0].name}
+                        {' •'}
+                      </Link>
+                    )}{' '}
                     <span className="date">
                       {album.releaseyear.slice(0, 4)}
                     </span>{' '}
@@ -134,14 +155,26 @@ const Album = () => {
                             ></i>
                             <div className="info">
                               <div className="title">{song.title}</div>
-                              <div className="singer">The Weeknd</div>
+                              <div className="singer">
+                                {album.authorKey[0]?.name}
+                              </div>
                             </div>
                           </div>
                           <div className="right">
                             <div className="plays">{song.listens}</div>
                             <div className="end">
+                              <i className="add fa-solid fa-plus fa-lg"></i>
                               <div className="length">{song.length}</div>
-                              <i className="icon more fa-solid fa-ellipsis fa-2x"></i>
+                              <div className="like">
+                                <i
+                                  className={
+                                    liked
+                                      ? 'like liked fa-solid fa-heart fa-lg'
+                                      : 'like fa-regular fa-heart fa-lg'
+                                  }
+                                  onClick={() => setLiked((prev) => !prev)}
+                                ></i>
+                              </div>
                             </div>
                           </div>
                         </div>

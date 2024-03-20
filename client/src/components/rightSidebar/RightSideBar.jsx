@@ -4,20 +4,67 @@ import { Link } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 import { PlayerContext } from '../../context/Player';
 import MusicContext from '../../context/MusicContext';
+import { useReducer } from 'react';
+import axios from 'axios';
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'FETCH_AUTHOR_START':
+      return { ...state, loading: true };
+    case 'FETCH_AUTHOR_SUCCESS':
+      return { ...state, author: action.payload, loading: false };
+    case 'FETCH_AUTHOR_FAILURE':
+      return { ...state, loading: false, error: action.payload };
+  }
+};
+
+let currentAuthor = {};
 
 const RightSideBar = () => {
-  const { state, dispatch } = useContext(PlayerContext);
+  const { state, ctxDispatch } = useContext(PlayerContext);
   const { songslist, currentSong } = useContext(MusicContext);
   const { isOpen } = state;
 
   const closeHandler = async (e) => {
     e.preventDefault();
     try {
-      dispatch({ type: 'SIDEBAR_CLOSE' });
+      ctxDispatch({ type: 'SIDEBAR_CLOSE' });
     } catch (err) {
       console.log(err);
     }
   };
+
+  const [{ loading, error, author }, dispatch] = useReducer(reducer, {
+    author: {},
+    loading: true,
+    error: '',
+  });
+
+  const key = songslist[currentSong].authorKey;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      dispatch({ type: 'FETCH_AUTHOR_START' });
+      try {
+        const result = await axios.get(
+          `http://localhost:3000/api/authors/key/${key}`,
+          {
+            headers: {
+              token:
+                'Bearer: ' +
+                JSON.parse(localStorage.getItem('userInfo')).accessToken,
+            },
+          }
+        );
+        dispatch({ type: 'FETCH_AUTHOR_SUCCESS', payload: result.data });
+        currentAuthor = result.data[0];
+        //songslist[currentSong] = pickedSong;
+      } catch (err) {
+        dispatch({ type: 'FETCH_AUTHOR_FAILURE', payload: error.message });
+      }
+    };
+    fetchData();
+  }, [songslist[currentSong]]);
 
   // A FELTÉTELT ÁTÍRNI CURRENTSONGRA
   return (
@@ -48,7 +95,7 @@ const RightSideBar = () => {
         <div className="onPlay">
           <div className="song">
             <div className="header">
-              <h3 className="albumTitle">AUSTIN</h3>
+              <h3 className="albumTitle">{songslist[currentSong]?.albumKey}</h3>
               <i className="close fa-solid fa-xmark" onClick={closeHandler}></i>
             </div>
             <img src={songslist[currentSong]?.coverImg} alt="" />
@@ -56,7 +103,7 @@ const RightSideBar = () => {
               <div className="left">
                 <h1 className="songTitle">{songslist[currentSong]?.title}</h1>
                 <Link to="/author" className="infoSinger">
-                  {songslist[currentSong]?.author}
+                  {currentAuthor?.name}
                 </Link>
               </div>
               <div className="right">
@@ -67,23 +114,17 @@ const RightSideBar = () => {
           <div className="singer">
             <div className="top">
               <span>Az előadóról</span>
-              <img
-                src="https://i.pinimg.com/originals/2e/e8/61/2ee861918e197006cc5b9d948b6a645b.jpg"
-                alt=""
-              />
+              <img src={currentAuthor?.descImg} alt="" />
             </div>
             <div className="bottom">
               <Link to="/author" className="name">
-                {songslist[currentSong]?.author}
+                {currentAuthor?.name}
               </Link>
               <div className="stats">
-                <span>59 807 389 hallgató havonta</span>
+                <span>{currentAuthor?.listeners} hallgató havonta</span>
                 <button className="followButton">Követés</button>
               </div>
-              <p className="desc">
-                Diamond-certified American hitmaker Post Malone bridges the gap
-                between the worlds of rap and the pop...
-              </p>
+              <p className="desc">{currentAuthor?.desc}</p>
             </div>
           </div>
           <div className="authors">
@@ -94,7 +135,7 @@ const RightSideBar = () => {
             <div className="list">
               <div className="author">
                 <Link to="/author" className="name">
-                  Post Malone
+                  {currentAuthor?.name}
                 </Link>
                 <div className="authorTitle">Fő előadó, Producer</div>
               </div>

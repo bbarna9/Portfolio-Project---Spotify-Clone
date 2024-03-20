@@ -1,10 +1,17 @@
 import Scrollbars from 'react-custom-scrollbars';
 import './leftSideBar.scss';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
 const LeftSideBar = () => {
+  const [open, setOpen] = useState(true);
+
+  const handleClose = () => {
+    setOpen((prev) => !prev);
+  };
+
   return (
-    <div className="leftsidebar">
+    <div className={open ? 'leftsidebar' : 'leftsidebar closed'}>
       <Scrollbars
         autoHide
         autoHideTimeout={1000}
@@ -25,17 +32,30 @@ const LeftSideBar = () => {
         renderView={(props) => <div {...props} className="view" />}
       >
         <div className="top">
-          <Link to="/">
-            <i className="fa-solid fa-house icon"></i> Kezdőlap
-          </Link>
-          <a href="#">
-            <i className="fa-solid fa-magnifying-glass icon"></i> Keresés
-          </a>
+          <div className="topTop">
+            <Link to="/">
+              <i className="fa-solid fa-house fa-lg"></i>
+              <span>Kezdőlap</span>
+            </Link>
+          </div>
+          <div className="topBottom">
+            <a href="#">
+              <i className="fa-solid fa-magnifying-glass fa-lg"></i>
+              <span>Keresés</span>
+            </a>
+          </div>
         </div>
         <div className="bottom">
           <div className="first">
             <div className="left">
-              <i className="icon fa-solid fa-folder-open"></i>
+              <i
+                className={
+                  open
+                    ? 'icon fa-solid fa-folder-open fa-lg'
+                    : 'icon fa-solid fa-folder fa-lg'
+                }
+                onClick={handleClose}
+              ></i>
               <span>Gyűjteményem</span>
             </div>
             <div className="right">

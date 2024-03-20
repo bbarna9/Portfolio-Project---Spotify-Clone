@@ -2,7 +2,6 @@
   color: white;
   width: 21vw;
   height: calc(100% - 90px);
-  overflow: auto;
 
   &::-webkit-scrollbar {
     display: none;
@@ -12,27 +11,51 @@
     height: 17%;
     display: flex;
     flex-direction: column;
+    justify-content: space-evenly;
     background-color: #121212;
     border-radius: 8px;
-    justify-content: space-evenly;
     padding-left: 30px;
     margin-bottom: 10px;
 
-    a {
-      text-decoration: none;
+    .topTop {
+      display: flex;
       color: rgb(190, 190, 190);
       font-weight: 600;
-      display: flex;
-      gap: 20px;
       transition: 0.5s;
-      align-items: center;
 
-      .icon {
-        font-size: 20px !important;
+      a {
+        color: inherit;
+        text-decoration: none;
+
+        span {
+          margin-left: 20px;
+        }
       }
 
       &:hover {
         color: white;
+        cursor: pointer;
+      }
+    }
+
+    .topBottom {
+      display: flex;
+      color: rgb(190, 190, 190);
+      font-weight: 600;
+      transition: 0.5s;
+
+      a {
+        color: inherit;
+        text-decoration: none;
+
+        span {
+          margin-left: 22px;
+        }
+      }
+
+      &:hover {
+        color: white;
+        cursor: pointer;
       }
     }
   }
@@ -54,6 +77,10 @@
       align-items: center;
 
       .left {
+        .icon {
+          padding-left: 5px;
+        }
+
         span {
           margin-left: 15px;
         }
@@ -216,5 +243,53 @@
     overflow: scroll;
     margin-right: -15px;
     margin-bottom: -17px !important; // changed from -15px  (default) to -17px (native scrollbar had a portion visible)
+  }
+
+  &.closed {
+    width: 80px;
+
+    .top {
+      span {
+        display: none;
+      }
+    }
+
+    .bottom {
+      padding-left: 5px;
+      padding-right: 5px;
+
+      .first {
+        .left {
+          .icon {
+            margin: 18px 0;
+          }
+
+          span {
+            display: none;
+          }
+        }
+
+        .right {
+          display: none;
+        }
+      }
+
+      .second {
+        display: none;
+      }
+
+      .third {
+        display: none;
+      }
+
+      .collection {
+        .item {
+          margin-right: 0;
+          .info {
+            display: none;
+          }
+        }
+      }
+    }
   }
 }

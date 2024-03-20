@@ -26,6 +26,17 @@ router.get('/:id', verify, async (req, res) => {
   }
 });
 
+// GET AUTHOR BY KEY
+
+router.get('/key/:key', verify, async (req, res) => {
+  const author = await Author.aggregate([{ $match: { key: req.params.key } }]);
+  if (author) {
+    res.send(author);
+  } else {
+    res.status(404).send({ message: 'Author not found.' });
+  }
+});
+
 // ADD AN AUTHOR
 
 router.post('/', verify, isAdmin, async (req, res) => {

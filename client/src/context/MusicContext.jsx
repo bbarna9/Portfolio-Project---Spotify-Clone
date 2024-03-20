@@ -17,6 +17,11 @@ const reducer = (state, action) => {
         currentSong: action.data,
         playing: true,
       };
+    case 'SET_CURRENT_AUTHOR':
+      return {
+        ...state,
+        currentAuthor: action.data,
+      };
     case 'TOGGLE_RANDOM':
       return {
         ...state,
@@ -57,7 +62,9 @@ export const MusicContextProvider = (props) => {
   // Set current song
   const SetCurrent = (id) => {
     dispatch({ type: 'SET_CURRENT_SONG', data: id });
-    console.log(state.currentSong);
+  };
+  const SetAuthor = (key) => {
+    dispatch({ type: 'SET_CURRENT_SONG', data: key });
   };
 
   // Prev song

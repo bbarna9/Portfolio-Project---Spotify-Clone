@@ -15,6 +15,7 @@ export const PlayerContext = createContext();
 function reducer(state, action) {
   switch (action.type) {
     case 'USER_LOGIN':
+      console.log('trying');
       return { ...state, userInfo: action.payload };
     case 'USER_LOGOUT':
       return {
@@ -47,8 +48,8 @@ function reducer(state, action) {
 }
 
 export const PlayerContextProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
-  const value = { state, dispatch };
+  const [state, ctxDispatch] = useReducer(reducer, INITIAL_STATE);
+  const value = { state, ctxDispatch };
 
   return (
     <PlayerContext.Provider value={value}>{children}</PlayerContext.Provider>

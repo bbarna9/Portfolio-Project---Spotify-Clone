@@ -3,12 +3,20 @@ import FeaturedItem from '../../components/featuredItem/FeaturedItem';
 import './author.scss';
 import data from '../../albumData.json';
 import popularData from '../../popularData.json';
+import { useState } from 'react';
 
 const Author = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  const handleScroll = (event) => {
+    setIsScrolled(event.currentTarget.scrollTop === 0 ? false : true);
+    console.log(isScrolled);
+  };
+
   return (
     <div className="author">
-      <Navbar />
-      <div className="container">
+      <Navbar isScrolled={isScrolled} />
+      <div className="container" onScroll={handleScroll}>
         <div className="mainContainer">
           <div className="header">
             <div className="right">

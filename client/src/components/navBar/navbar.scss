@@ -1,16 +1,19 @@
 .navbar {
-  position: fixed;
-  top: 25px;
-  width: 53%;
+  position: absolute;
+  width: calc(100% - 40px);
   display: flex;
   justify-content: space-between;
-  padding: 0 20px;
+  padding: 15px 20px;
   background-color: transparent;
   margin-bottom: 100px;
   z-index: 999;
+  transition: 0.5s;
+  overflow: hidden;
 
-  &.closed {
-    width: 74.5%;
+  &.scrolled {
+    background-color: rgba(18, 18, 18, 0.95);
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
   }
 
   .left {

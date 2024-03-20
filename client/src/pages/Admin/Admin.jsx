@@ -4,7 +4,7 @@ import './admin.scss';
 import data from '../../albumData.json';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { Link } from 'react-router-dom';
-import { useEffect, useReducer } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import axios from 'axios';
 import SongWidget from '../../components/songWidget/SongWidget';
 import AlbumWidget from '../../components/albumWidget/AlbumWidget';
@@ -22,6 +22,8 @@ const reducer = (state, action) => {
 };
 
 const Admin = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
+
   const [{ loading, error, album }, dispatch] = useReducer(reducer, {
     album: {},
     loading: true,
@@ -42,14 +44,19 @@ const Admin = () => {
     fetchData();
   }, []);
 
+  const handleScroll = (event) => {
+    setIsScrolled(event.currentTarget.scrollTop === 0 ? false : true);
+    console.log(isScrolled);
+  };
+
   return (
     <div className="admin">
       {loading ? (
         'Loading...'
       ) : (
         <>
-          <Navbar />
-          <div className="container">
+          <Navbar isScrolled={isScrolled} />
+          <div className="container" onScroll={handleScroll}>
             <div className="mainContainer">
               <div className="header">
                 <h1 className="albumTitle">Manage Media</h1>

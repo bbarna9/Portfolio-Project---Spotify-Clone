@@ -7,6 +7,7 @@ import { PlayerContext } from '../../context/Player.jsx';
 import audioFile from '../../assets/Audio.mp3';
 import MusicContext from '../../context/MusicContext.jsx';
 import axios from 'axios';
+import Slider from '../slider/Slider.jsx';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -94,6 +95,7 @@ const BottomBar = () => {
   const [currentTime, setCurrentTime] = useState(0);
   const [muted, setMuted] = useState(false);
   const [prevVol, setPrevVol] = useState(statevolum);
+  const [percentage, setPercentage] = useState(0);
 
   let volumePower;
 
@@ -136,13 +138,28 @@ const BottomBar = () => {
     let compute = (e.target.value * dur) / 100;
     setCurrentTime(compute);
     audio.current.currentTime = compute;
+    // audio.current.currentTime = (audio.current.duration / 100) * e.target.value;
+    setPercentage(e.target.value);
+  };
+
+  const getCurrDuration = (e) => {
+    const percent = (
+      (e.currentTarget.currentTime / e.currentTarget.duration) *
+      100
+    ).toFixed(2);
+    const time = e.currentTarget.currentTime;
+
+    setPercentage(+percent);
+    setCurrentTime(time.toFixed(2));
+  };
+
+  const onChange = (e) => {
+    setPercentage(e.target.value);
   };
 
   useEffect(() => {
     audio.current.volume = statevolum;
     const pickedSong = JSON.parse(localStorage.getItem('currentSong'));
-    console.log(pickedSong);
-    console.log(songslist[currentSong]);
     if (playing) {
       toggleAudio();
     }
@@ -169,7 +186,8 @@ const BottomBar = () => {
   return (
     <div className={isOpen ? 'bottombar opened' : 'bottombar closed'}>
       <audio
-        onTimeUpdate={(e) => setCurrentTime(e.target.currentTime)}
+        // onTimeUpdate={(e) => setCurrentTime(e.target.currentTime)}
+        onTimeUpdate={getCurrDuration}
         onCanPlay={(e) => setDur(e.target.duration)}
         onEnded={handleEnd}
         ref={audio}
@@ -242,15 +260,21 @@ const BottomBar = () => {
         </div>
         <div className="bottom">
           <span className="length">{fmtMSS(currentTime)}</span>
+
           <div className="progressContainer">
-            <input
+            <Slider
+              onChange={handleProgress}
+              percentage={percentage}
+              // value={dur ? (currentTime * 100) / dur : 0}
+            />
+            {/* <input
               onChange={handleProgress}
               value={dur ? (currentTime * 100) / dur : 0}
               type="range"
               name="progresBar"
               className="progressBar"
               id="prgbar"
-            />
+            /> */}
           </div>
           {/* <span className="length">{fmtMSS(dur)}</span> */}
           <span className="length">
@@ -276,13 +300,16 @@ const BottomBar = () => {
         <div className="volumeProgress">
           <i onClick={handleMute} className={volumePower}></i>
           <div className="volumeBar">
-            <input
+            <Slider
+              onChange={(e) => handleVolume(e.target.value / 100)}
+              percentage={Math.round(statevolum * 100)}
+            />
+            {/* <input
               value={Math.round(statevolum * 100)}
               type="range"
               name="volBar"
               id="volume"
-              onChange={(e) => handleVolume(e.target.value / 100)}
-            />
+            /> */}
           </div>
         </div>
         <i className="icon fa-solid fa-up-right-and-down-left-from-center"></i>

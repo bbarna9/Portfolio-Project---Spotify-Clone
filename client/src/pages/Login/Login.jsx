@@ -15,7 +15,7 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const { state, dispatch } = useContext(PlayerContext);
+  const { state, ctxDispatch } = useContext(PlayerContext);
   const { userInfo } = state;
 
   const submitHandler = async (e) => {
@@ -28,8 +28,10 @@ const Login = () => {
           password,
         }
       );
-      dispatch({ type: 'USER_LOGIN', payload: data });
+      ctxDispatch({ type: 'USER_LOGIN', payload: data });
+      console.log('fasz');
       localStorage.setItem('userInfo', JSON.stringify(data));
+      console.log(localStorage.getItem('userInfo'));
       navigate(redirect || '/');
     } catch (err) {
       toast.error(err);
