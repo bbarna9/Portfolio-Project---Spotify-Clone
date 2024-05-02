@@ -54,7 +54,6 @@ const Home = () => {
 
   const handleScroll = (event) => {
     setIsScrolled(event.currentTarget.scrollTop === 0 ? false : true);
-    console.log(isScrolled);
   };
 
   return (
@@ -87,7 +86,7 @@ const Home = () => {
             <div className="homeHeader">
               <h1 className="greeting">Jó napot</h1>
               <div className={isOpen ? 'suggestions' : 'suggestions closed'}>
-                {albums?.map((album, i) => {
+                {albums?.slice(0, 8).map((album, i) => {
                   return (
                     <Link
                       key={i}

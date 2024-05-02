@@ -29,9 +29,8 @@ const Login = () => {
         }
       );
       ctxDispatch({ type: 'USER_LOGIN', payload: data });
-      console.log('fasz');
       localStorage.setItem('userInfo', JSON.stringify(data));
-      console.log(localStorage.getItem('userInfo'));
+      window.dispatchEvent(new Event('storage'));
       navigate(redirect || '/');
     } catch (err) {
       toast.error(err);

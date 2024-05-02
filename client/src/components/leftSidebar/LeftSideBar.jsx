@@ -1,14 +1,80 @@
 import Scrollbars from 'react-custom-scrollbars';
 import './leftSideBar.scss';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useReducer, useState } from 'react';
+import axios from 'axios';
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'FETCH_FAVS_START':
+      return { ...state, loading: true };
+    case 'FETCH_FAVS_SUCCESS':
+      return { ...state, favs: action.payload, loading: false };
+    case 'FETCH_FAVS_FAILURE':
+      return { ...state, loading: false, error: action.payload };
+  }
+};
 
 const LeftSideBar = () => {
   const [open, setOpen] = useState(true);
+  const [user, setUser] = useState(
+    JSON.parse(localStorage.getItem('userInfo')) || null
+  );
+  console.log(user?.likedAuthors);
+  const [fav, setFav] = useState(
+    user?.likedSongs
+      ? JSON.parse(localStorage.getItem('userInfo'))?.likedSongs
+      : []
+  );
+  const [favAlbums, setFavAlbums] = useState([]);
+  const [favAuthors, setFavAuthors] = useState([]);
+  const [changed, setChanged] = useState(true);
+
+  const [{ loading, error, favs }, dispatch] = useReducer(reducer, {
+    favs: [],
+    loading: true,
+    error: '',
+  });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      dispatch({ type: 'FETCH_FAVS_START' });
+      try {
+        const result = await axios.get(
+          `http://localhost:3000/api/users/${user._id}/favourites`,
+          {
+            headers: {
+              token:
+                'Bearer: ' +
+                JSON.parse(localStorage.getItem('userInfo')).accessToken,
+            },
+          }
+        );
+        dispatch({
+          type: 'FETCH_FAVS_SUCCESS',
+          payload: result.data[0],
+        });
+        setFavAlbums((prev) => [...result.data[0].albums]);
+        setFavAuthors((prev) => [...result.data[0].authors]);
+        console.log(result.data[0].authors);
+        console.log(favAuthors);
+      } catch (err) {
+        dispatch({ type: 'FETCH_FAVS_FAILURE', payload: error.message });
+        console.log(err);
+      }
+    };
+    fetchData();
+  }, [changed]);
 
   const handleClose = () => {
     setOpen((prev) => !prev);
   };
+
+  window.addEventListener('storage', () => {
+    setFav((prev) => JSON.parse(localStorage.getItem('userInfo'))?.likedSongs);
+    setUser((prev) => JSON.parse(localStorage.getItem('userInfo')));
+    setChanged((prev) => !prev);
+  });
 
   return (
     <div className={open ? 'leftsidebar' : 'leftsidebar closed'}>
@@ -78,86 +144,51 @@ const LeftSideBar = () => {
             </div>
           </div>
           <div className="collection">
-            <Link to="album" className="item">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/en/1/12/21_Savage_-_Issa_Album.png"
-                alt=""
-              />
-              <div className="info">
-                <h2 className="infoTitle">Kedvelt dalok</h2>
-                <span>Műsorlista • 115 dal</span>
-              </div>
-            </Link>
-            <Link to="album" className="item">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/en/1/12/21_Savage_-_Issa_Album.png"
-                alt=""
-              />
-              <div className="info">
-                <h2 className="infoTitle">Kedvelt dalok</h2>
-                <span>Műsorlista • 115 dal</span>
-              </div>
-            </Link>
-            <Link to="album" className="item">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/en/1/12/21_Savage_-_Issa_Album.png"
-                alt=""
-              />
-              <div className="info">
-                <h2 className="infoTitle">Kedvelt dalok</h2>
-                <span>Műsorlista • 115 dal</span>
-              </div>
-            </Link>
-            <Link to="album" className="item">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/en/1/12/21_Savage_-_Issa_Album.png"
-                alt=""
-              />
-              <div className="info">
-                <h2 className="infoTitle">Kedvelt dalok</h2>
-                <span>Műsorlista • 115 dal</span>
-              </div>
-            </Link>
-            <Link to="album" className="item">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/en/1/12/21_Savage_-_Issa_Album.png"
-                alt=""
-              />
-              <div className="info">
-                <h2 className="infoTitle">Kedvelt dalok</h2>
-                <span>Műsorlista • 115 dal</span>
-              </div>
-            </Link>
-            <Link to="album" className="item">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/en/1/12/21_Savage_-_Issa_Album.png"
-                alt=""
-              />
-              <div className="info">
-                <h2 className="infoTitle">Kedvelt dalok</h2>
-                <span>Műsorlista • 115 dal</span>
-              </div>
-            </Link>
-            <Link to="album" className="item">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/en/1/12/21_Savage_-_Issa_Album.png"
-                alt=""
-              />
-              <div className="info">
-                <h2 className="infoTitle">Kedvelt dalok</h2>
-                <span>Műsorlista • 115 dal</span>
-              </div>
-            </Link>
-            <Link to="album" className="item">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/en/1/12/21_Savage_-_Issa_Album.png"
-                alt=""
-              />
-              <div className="info">
-                <h2 className="infoTitle">Kedvelt dalok</h2>
-                <span>Műsorlista • 115 dal</span>
-              </div>
-            </Link>
+            {user && (
+              <>
+                <Link to="favourites" className="item">
+                  <img src="/public/likedsongs.png" alt="" />
+                  <div className="info">
+                    <h2 className="infoTitle">Kedvelt dalok</h2>
+                    <span>Műsorlista • {fav.length} dal</span>
+                  </div>
+                </Link>
+                {favs.albums?.map((album, i) => {
+                  return (
+                    <Link
+                      to={`/albums/key/${album.key}`}
+                      className="item"
+                      key={i}
+                    >
+                      <img src={album?.coverImg} alt="" />
+                      <div className="info">
+                        <h2 className="infoTitle">{album?.title}</h2>
+                        <span>Album • {album.length}</span>
+                      </div>
+                    </Link>
+                  );
+                })}
+                {favs.authors?.map((author, i) => {
+                  return (
+                    <Link
+                      to={`/authors/key/${author.key}`}
+                      className="item"
+                      key={i}
+                    >
+                      <img
+                        src={author?.profileImg}
+                        alt=""
+                        style={{ borderRadius: '50%' }}
+                      />
+                      <div className="info">
+                        <h2 className="infoTitle">{author?.name}</h2>
+                        <span>Előadó</span>
+                      </div>
+                    </Link>
+                  );
+                })}
+              </>
+            )}
           </div>
         </div>
       </Scrollbars>

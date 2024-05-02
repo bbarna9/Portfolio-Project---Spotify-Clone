@@ -1,6 +1,8 @@
 .author {
   flex: 2.5;
   height: calc(100% - 90px);
+  overflow: scroll;
+  position: relative;
 
   .container {
     color: white;
@@ -15,84 +17,92 @@
     .mainContainer {
       background: rgb(18, 18, 18);
 
-      .header {
-        padding: 0 20px;
-        padding-top: 80px;
-        padding-bottom: 20px;
-        height: fit-content;
-        display: flex;
-        background-image: url('https://www.leisurebyte.com/wp-content/uploads/2023/04/PostMalone-Chemical-1.jpg');
+      .wrapper {
         background-repeat: no-repeat;
         background-position: center;
+        background-size: cover;
 
-        .left {
-          img {
-            margin-right: 20px;
-            width: 200px;
-            height: 200px;
-            border-radius: 4px;
-            box-shadow: 0px 4px 23px -3px rgba(0, 0, 0, 0.75);
-            -webkit-box-shadow: 0px 4px 23px -3px rgba(0, 0, 0, 0.75);
-            -moz-box-shadow: 0px 4px 23px -3px rgba(0, 0, 0, 0.75);
-          }
-        }
-
-        .right {
+        .header {
+          padding: 0 20px;
+          padding-top: 80px;
+          padding-bottom: 20px;
           display: flex;
-          flex-direction: column;
-          position: relative;
+          background: rgb(0, 0, 0);
+          background: linear-gradient(
+            180deg,
+            rgba(0, 0, 0, 0) 0%,
+            rgba(18, 18, 18, 0.5) 100%
+          );
 
-          .type {
-            margin: 25px 0;
-            display: flex;
-            align-items: center;
-
-            .iconBackground {
-              color: #3d91f4;
-            }
-
-            .checkIcon {
-              position: absolute;
-              color: white;
-              left: 5px;
-            }
-
-            span {
-              margin-left: 6px;
-              font-size: 13px;
-              font-weight: 600;
-            }
-          }
-
-          .albumTitle {
-            font-size: 90px;
-            margin: 0;
-            line-height: 70px;
-            padding: 0;
-            margin-bottom: 40px;
-          }
-
-          .bottomInfo {
-            bottom: 2px;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            font-size: 14px;
-            font-weight: 500;
-
+          .left {
             img {
-              width: 25px;
-              height: 25px;
-              border-radius: 50%;
-              object-fit: cover;
+              margin-right: 20px;
+              width: 200px;
+              height: 200px;
+              border-radius: 4px;
+              box-shadow: 0px 4px 23px -3px rgba(0, 0, 0, 0.75);
+              -webkit-box-shadow: 0px 4px 23px -3px rgba(0, 0, 0, 0.75);
+              -moz-box-shadow: 0px 4px 23px -3px rgba(0, 0, 0, 0.75);
+            }
+          }
+
+          .right {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+
+            .type {
+              margin: 25px 0;
+              display: flex;
+              align-items: center;
+
+              .iconBackground {
+                color: #3d91f4;
+              }
+
+              .checkIcon {
+                position: absolute;
+                color: white;
+                left: 5px;
+              }
+
+              span {
+                margin-left: 6px;
+                font-size: 13px;
+                font-weight: 600;
+              }
             }
 
-            .singer {
-              font-weight: 600;
+            .albumTitle {
+              font-size: 90px;
+              margin: 0;
+              line-height: 70px;
+              padding: 0;
+              margin-bottom: 40px;
             }
-            .date {
-            }
-            .length {
+
+            .bottomInfo {
+              bottom: 2px;
+              display: flex;
+              align-items: center;
+              gap: 4px;
+              font-size: 14px;
+              font-weight: 500;
+
+              img {
+                width: 25px;
+                height: 25px;
+                border-radius: 50%;
+                object-fit: cover;
+              }
+
+              .singer {
+                font-weight: 600;
+              }
+              .date {
+              }
+              .length {
+              }
             }
           }
         }
@@ -270,6 +280,8 @@
                 margin: 0 30px;
                 font-size: 14px;
                 font-weight: 600;
+                width: 100px;
+                text-align: right;
               }
 
               .end {
@@ -389,6 +401,62 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+      }
+    }
+
+    .desc {
+      display: flex;
+      flex-direction: column;
+      margin: 20px;
+      height: 700px;
+
+      .head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 25px;
+
+        h1 {
+          font-size: 22px;
+          margin: 0;
+        }
+      }
+
+      .container {
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        width: 100%;
+        position: relative;
+
+        .info {
+          position: absolute;
+          padding-bottom: 30px;
+          height: calc(100% - 30px);
+          font-weight: 500;
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-end;
+          background: rgb(0, 0, 0);
+          background: linear-gradient(
+            180deg,
+            rgba(0, 0, 0, 0) 0%,
+            rgba(18, 18, 18, 0.5) 100%
+          );
+          width: 100%;
+
+          .listens {
+            padding: 20px 30px;
+            font-weight: 600;
+          }
+
+          .desc {
+            padding-left: 30px;
+            width: 90%;
+            margin: 0;
+            height: fit-content;
+          }
+        }
       }
     }
 

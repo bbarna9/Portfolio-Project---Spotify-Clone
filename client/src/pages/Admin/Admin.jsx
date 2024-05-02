@@ -36,7 +36,6 @@ const Admin = () => {
       try {
         const result = await axios.get('http://localhost:3000/api/albums');
         dispatch({ type: 'FETCH_ALBUM_SUCCESS', payload: result.data[0] });
-        console.log();
       } catch (err) {
         dispatch({ type: 'FETCH_ALBUM_FAILURE', payload: error.message });
       }
@@ -46,7 +45,6 @@ const Admin = () => {
 
   const handleScroll = (event) => {
     setIsScrolled(event.currentTarget.scrollTop === 0 ? false : true);
-    console.log(isScrolled);
   };
 
   return (

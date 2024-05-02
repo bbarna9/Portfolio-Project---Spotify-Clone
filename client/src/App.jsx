@@ -21,6 +21,7 @@ import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
 import ProtectedRoute from './components/protectedRoute/ProtectedRoute';
 import Playlist from './pages/Playlist/Playlist';
+import Favourites from './pages/Favourites/Favourites';
 
 function App() {
   const Layout = () => {
@@ -45,11 +46,23 @@ function App() {
         },
         {
           path: '/albums/key/:key',
-          element: <Album />,
+          element: (
+            <ProtectedRoute>
+              <Album />
+            </ProtectedRoute>
+          ),
         },
         {
-          path: '/authors/:id',
+          path: '/authors/key/:key',
           element: <Author />,
+        },
+        {
+          path: '/favourites',
+          element: (
+            <ProtectedRoute>
+              <Favourites />
+            </ProtectedRoute>
+          ),
         },
         {
           path: '/profile',

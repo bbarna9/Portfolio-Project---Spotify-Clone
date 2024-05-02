@@ -125,6 +125,12 @@
           align-items: center;
           justify-content: space-between;
           width: 100%;
+          background-color: red;
+
+          .singer {
+            margin-left: 20px;
+            background-color: red;
+          }
 
           .end {
             display: flex;

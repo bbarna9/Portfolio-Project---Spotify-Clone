@@ -29,11 +29,25 @@ router.get('/:id', verify, async (req, res) => {
 // GET AUTHOR BY KEY
 
 router.get('/key/:key', verify, async (req, res) => {
-  const author = await Author.aggregate([{ $match: { key: req.params.key } }]);
-  if (author) {
-    res.send(author);
-  } else {
-    res.status(404).send({ message: 'Author not found.' });
+  try {
+    const author = await Author.aggregate([
+      { $match: { key: req.params.key } },
+      {
+        $lookup: {
+          from: 'songs', // collection name in db
+          localField: 'key',
+          foreignField: 'authorKey',
+          as: 'songs',
+        },
+      },
+    ]);
+    if (author) {
+      res.send(author[0]);
+    } else {
+      res.status(404).send({ message: 'Author not found.' });
+    }
+  } catch (err) {
+    res.status(500).json(err);
   }
 });
 

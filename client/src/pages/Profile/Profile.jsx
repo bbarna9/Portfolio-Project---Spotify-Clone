@@ -1,20 +1,30 @@
 import './profile.scss';
 import Navbar from '../../components/navBar/Navbar';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useContext, useState } from 'react';
 import { PlayerContext } from '../../context/Player';
 
 const Profile = () => {
   const subscribed = true;
-  const { state } = useContext(PlayerContext);
+  const { state, ctxDispatch } = useContext(PlayerContext);
   const { userInfo } = state;
 
   const [name, setName] = useState(userInfo.name);
   const [email, setEmail] = useState(userInfo.email);
   const [username, setUsername] = useState(userInfo.username);
 
+  const navigate = useNavigate();
+
   const handleClick = (e) => {
     e.preventDefault();
+  };
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+    ctxDispatch({ type: 'USER_LOGOUT' });
+    localStorage.removeItem('userInfo');
+    window.dispatchEvent(new Event('storage'));
+    navigate('/');
   };
 
   return (
@@ -29,7 +39,15 @@ const Profile = () => {
           )}
         </div>
         <div className="right">
-          <span>Profil</span>
+          <div className="top">
+            <span style={{ paddingLeft: '15px' }}>Profil</span>
+            <span
+              onClick={(e) => handleLogout(e)}
+              style={{ cursor: 'pointer', fontWeight: '500' }}
+            >
+              Kijelentkezés
+            </span>
+          </div>
           <h1 className="title">{userInfo.name}</h1>
           <form action="">
             <label className="picLabel">Profile Picture</label>

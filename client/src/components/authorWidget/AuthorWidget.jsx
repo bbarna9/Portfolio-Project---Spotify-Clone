@@ -27,7 +27,6 @@ const AuthorWidget = () => {
       try {
         const result = await axios.get('http://localhost:3000/api/authors');
         dispatch({ type: 'FETCH_AUTHORS_SUCCESS', payload: result.data });
-        console.log();
       } catch (err) {
         dispatch({ type: 'FETCH_AUTHORS_FAILURE', payload: error.message });
       }
@@ -50,8 +49,8 @@ const AuthorWidget = () => {
             <span>Cím</span>
           </div>
           <div className="right">
-            <div className="span">Előadó</div>
-            <div className="extras">Kezelés</div>
+            <div className="span">Havi hallgatók</div>
+            <div className="extras">Műfaj</div>
           </div>
         </div>
         <div className="bottom">

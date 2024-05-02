@@ -15,7 +15,6 @@ export const PlayerContext = createContext();
 function reducer(state, action) {
   switch (action.type) {
     case 'USER_LOGIN':
-      console.log('trying');
       return { ...state, userInfo: action.payload };
     case 'USER_LOGOUT':
       return {

@@ -55,6 +55,11 @@
       position: relative;
       width: 70%;
 
+      .top {
+        display: flex;
+        justify-content: space-between;
+      }
+
       .title {
         font-size: 72px;
         margin: 0;

@@ -178,6 +178,11 @@
           color: #b6b6b6;
           font-size: 13px;
           font-weight: 600;
+          overflow: hidden;
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          text-overflow: ellipsis;
         }
       }
     }

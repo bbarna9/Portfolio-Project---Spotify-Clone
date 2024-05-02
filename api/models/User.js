@@ -16,6 +16,14 @@ const UserSchema = new mongoose.Schema(
         default: null,
       },
     ],
+    likedAlbums: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Album',
+        required: false,
+        default: null,
+      },
+    ],
     likedAuthors: [
       {
         type: mongoose.Schema.Types.ObjectId,

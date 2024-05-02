@@ -27,7 +27,6 @@ const SongWidget = () => {
       try {
         const result = await axios.get('http://localhost:3000/api/songs');
         dispatch({ type: 'FETCH_SONGS_SUCCESS', payload: result.data });
-        console.log();
       } catch (err) {
         dispatch({ type: 'FETCH_SONGS_FAILURE', payload: error.message });
       }
@@ -51,7 +50,7 @@ const SongWidget = () => {
           </div>
           <div className="right">
             <div className="span">Előadó</div>
-            <div className="extras">Kezelés</div>
+            <div className="extras">Hossz</div>
           </div>
         </div>
         <div className="bottom">

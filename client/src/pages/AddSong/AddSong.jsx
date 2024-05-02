@@ -1,12 +1,16 @@
 import './addSong.scss';
 import Navbar from '../../components/navBar/Navbar';
 import { Link } from 'react-router-dom';
-import { useReducer, useState } from 'react';
+import { useContext, useReducer, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import storage from '../../firebase.js';
+import { PlayerContext } from '../../context/Player.jsx';
 
 const AddSong = () => {
+  const { state } = useContext(PlayerContext);
+  const { isOpen, userInfo, currentSong } = state;
+
   const [song, setSong] = useState(null);
   const [coverImg, setCoverImg] = useState(null);
   const [link, setLink] = useState(null);
@@ -82,114 +86,113 @@ const AddSong = () => {
   return (
     <div className="addsong">
       <Navbar />
-      <div className="header">
-        <div className="left">
-          <img
-            src="https://pbs.twimg.com/media/FxpRR74XoAElTfH?format=jpg&name=small"
-            alt=""
-          />
-        </div>
-        <div className="right">
-          <h1 className="title">Add Song</h1>
-        </div>
-      </div>
-      <div className="albumInfo">
-        <form action="">
-          <div className="top">
-            <div className="left">
-              <label>Title</label>
-              <input
-                type="text"
-                placeholder="Title"
-                name="title"
-                onChange={handleChange}
-              />
-              <label>Album Key</label>
-              <input
-                type="text"
-                placeholder="Album Key"
-                name="albumKey"
-                onChange={handleChange}
-              />
-              <label>Cover Image</label>
-              <input
-                type="file"
-                placeholder="Cover Image"
-                name="coverImg"
-                id="coverImg"
-                onChange={(e) => setCoverImg(e.target.files[0])}
-              />
-              <label className="fileLabel" htmlFor="coverImg">
-                <i className="icon fa-solid fa-arrow-up-from-bracket fa-2x"></i>
-              </label>
-            </div>
-            <div className="center">
-              <label>Author</label>
-              <input
-                type="text"
-                placeholder="Author"
-                name="author"
-                onChange={handleChange}
-              />
-              <label>Length</label>
-              <input
-                type="text"
-                placeholder="Length"
-                name="length"
-                onChange={handleChange}
-              />
-              <label>Genre</label>
-              <input
-                type="text"
-                placeholder="Genre"
-                name="genre"
-                onChange={handleChange}
-              />
-            </div>
-            <div className="right">
-              <label>Author Key</label>
-              <input
-                type="text"
-                placeholder="Author Key"
-                name="authorKey"
-                onChange={handleChange}
-              />
-              <label>Listens</label>
-              <input
-                type="text"
-                placeholder="Listens"
-                name="listens"
-                onChange={handleChange}
-              />
-              <label>Audio File</label>
-              <input
-                type="file"
-                placeholder="Audio File"
-                name="link"
-                id="link"
-                onChange={(e) => setLink(e.target.files[0])}
-              />
-              <label htmlFor="link" className="fileLabel">
-                <i className="icon fa-solid fa-arrow-up-from-bracket fa-2x"></i>
-              </label>
-            </div>
+      <div className="container">
+        <div className="header">
+          <div className="left">
+            <img src={userInfo?.profilePic} alt="" />
           </div>
-          <div className="bottom">
-            {uploaded === 2 ? (
-              <button className="submitBtn" onClick={handleSubmit}>
-                Create
-              </button>
-            ) : (
-              <button
-                className="submitBtn"
-                onClick={handleUpload}
-                disabled={uploading ? true : false}
-              >
-                Upload
-              </button>
-            )}
+          <div className="right">
+            <h1 className="title">Add Song</h1>
           </div>
-        </form>
+        </div>
+        <div className="albumInfo">
+          <form action="">
+            <div className="top">
+              <div className="left">
+                <label>Title</label>
+                <input
+                  type="text"
+                  placeholder="Title"
+                  name="title"
+                  onChange={handleChange}
+                />
+                <label>Album Key</label>
+                <input
+                  type="text"
+                  placeholder="Album Key"
+                  name="albumKey"
+                  onChange={handleChange}
+                />
+                <label>Cover Image</label>
+                <input
+                  type="file"
+                  placeholder="Cover Image"
+                  name="coverImg"
+                  id="coverImg"
+                  onChange={(e) => setCoverImg(e.target.files[0])}
+                />
+                <label className="fileLabel" htmlFor="coverImg">
+                  <i className="icon fa-solid fa-arrow-up-from-bracket fa-2x"></i>
+                </label>
+              </div>
+              <div className="center">
+                <label>Author</label>
+                <input
+                  type="text"
+                  placeholder="Author"
+                  name="author"
+                  onChange={handleChange}
+                />
+                <label>Length</label>
+                <input
+                  type="text"
+                  placeholder="Length"
+                  name="length"
+                  onChange={handleChange}
+                />
+                <label>Genre</label>
+                <input
+                  type="text"
+                  placeholder="Genre"
+                  name="genre"
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="right">
+                <label>Author Key</label>
+                <input
+                  type="text"
+                  placeholder="Author Key"
+                  name="authorKey"
+                  onChange={handleChange}
+                />
+                <label>Listens</label>
+                <input
+                  type="text"
+                  placeholder="Listens"
+                  name="listens"
+                  onChange={handleChange}
+                />
+                <label>Audio File</label>
+                <input
+                  type="file"
+                  placeholder="Audio File"
+                  name="link"
+                  id="link"
+                  onChange={(e) => setLink(e.target.files[0])}
+                />
+                <label htmlFor="link" className="fileLabel">
+                  <i className="icon fa-solid fa-arrow-up-from-bracket fa-2x"></i>
+                </label>
+              </div>
+            </div>
+            <div className="bottom">
+              {uploaded === 2 ? (
+                <button className="submitBtn" onClick={handleSubmit}>
+                  Create
+                </button>
+              ) : (
+                <button
+                  className="submitBtn"
+                  onClick={handleUpload}
+                  disabled={uploading ? true : false}
+                >
+                  Upload
+                </button>
+              )}
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );

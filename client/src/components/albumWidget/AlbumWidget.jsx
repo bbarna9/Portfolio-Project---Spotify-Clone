@@ -27,7 +27,6 @@ const AlbumWidget = () => {
       try {
         const result = await axios.get('http://localhost:3000/api/albums');
         dispatch({ type: 'FETCH_ALBUMS_SUCCESS', payload: result.data });
-        console.log();
       } catch (err) {
         dispatch({ type: 'FETCH_ALBUMS_FAILURE', payload: error.message });
       }
@@ -50,8 +49,10 @@ const AlbumWidget = () => {
             <span>Cím</span>
           </div>
           <div className="right">
-            <div className="span">Előadó</div>
-            <div className="extras">Kezelés</div>
+            <div className="span"> </div>
+            <div className="extras" style={{ paddingRight: '100px' }}>
+              Hossz
+            </div>
           </div>
         </div>
         <div className="bottom">

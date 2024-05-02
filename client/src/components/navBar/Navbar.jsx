@@ -29,7 +29,7 @@ const Navbar = (props) => {
         <i className="icon fa-regular fa-bell"></i>
         <i className="icon fa-solid fa-users"></i>
         <Link to="/profile">
-          {userInfo?.profilePic !== '' ? (
+          {userInfo?.profilePic.length > 2 ? (
             <img src={userInfo?.profilePic} alt="" />
           ) : (
             <i className="icon fa-solid fa-user"></i>

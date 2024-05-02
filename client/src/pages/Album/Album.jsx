@@ -28,6 +28,15 @@ const Album = () => {
   const [isScrolled, setIsScrolled] = useState(false);
 
   const [liked, setLiked] = useState(false);
+  const [fav, setFav] = useState([
+    ...JSON.parse(localStorage.getItem('userInfo')).likedSongs,
+  ]);
+  const [favAlbums, setFavAlbums] = useState([
+    ...(JSON.parse(localStorage.getItem('userInfo')).likedAlbums || []),
+  ]);
+  console.log(favAlbums);
+
+  let user = JSON.parse(localStorage.getItem('userInfo'));
 
   const [{ loading, error, album }, dispatch] = useReducer(reducer, {
     album: {},
@@ -37,8 +46,9 @@ const Album = () => {
 
   const { key } = useParams();
 
+  const id = JSON.parse(localStorage.getItem('userInfo'))._id;
+
   const playHandler = (song) => {
-    //songslist.splice(0, songslist.length - 2);
     songslist.push(song);
     localStorage.setItem('currentSong', JSON.stringify(song));
     songsSet(songslist);
@@ -62,6 +72,7 @@ const Album = () => {
         dispatch({ type: 'FETCH_ALBUM_SUCCESS', payload: result.data });
       } catch (err) {
         dispatch({ type: 'FETCH_ALBUM_FAILURE', payload: error.message });
+        console.log(err);
       }
     };
     fetchData();
@@ -69,6 +80,69 @@ const Album = () => {
 
   const handleScroll = (event) => {
     setIsScrolled(event.currentTarget.scrollTop === 0 ? false : true);
+  };
+
+  const handleFavourited = async (e, songId) => {
+    e.preventDefault();
+    try {
+      const res = await axios.put(`http://localhost:3000/api/users/${id}`, {
+        headers: {
+          token:
+            'Bearer: ' +
+            JSON.parse(localStorage.getItem('userInfo')).accessToken,
+        },
+        songId,
+      });
+      if (user.likedSongs.includes(songId)) {
+        const index = user.likedSongs.indexOf(songId);
+        const index2 = fav.indexOf(songId);
+        if (index > -1) {
+          user.likedSongs.splice(index, 1);
+          setFav(user.likedSongs);
+        }
+        localStorage.setItem('userInfo', JSON.stringify(user));
+        window.dispatchEvent(new Event('storage'));
+      } else {
+        user.likedSongs.push(songId);
+        setFav(user.likedSongs);
+        localStorage.setItem('userInfo', JSON.stringify(user));
+        window.dispatchEvent(new Event('storage'));
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleAlbumFavourited = async (e, albumId) => {
+    e.preventDefault();
+    try {
+      const res = await axios.put(`http://localhost:3000/api/users/${id}`, {
+        headers: {
+          token:
+            'Bearer: ' +
+            JSON.parse(localStorage.getItem('userInfo')).accessToken,
+        },
+        albumId,
+      });
+      if (user.likedAlbums.includes(albumId)) {
+        console.log(1);
+        const index = user.likedAlbums.indexOf(albumId);
+        if (index > -1) {
+          user.likedAlbums.splice(index, 1);
+          setFavAlbums(user.likedAlbums);
+        }
+        localStorage.setItem('userInfo', JSON.stringify(user));
+        window.dispatchEvent(new Event('storage'));
+      } else {
+        console.log(1);
+        user.likedAlbums.push(albumId);
+        setFavAlbums(user.likedAlbums);
+        localStorage.setItem('userInfo', JSON.stringify(user));
+        window.dispatchEvent(new Event('storage'));
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -91,7 +165,14 @@ const Album = () => {
                 </div>
                 <div className="right">
                   <span className="type">Album</span>
-                  <h1 className="albumTitle">{album.title}</h1>
+                  <h1
+                    className="albumTitle"
+                    style={{
+                      fontSize: album.title?.length > 10 ? '50px' : '90px',
+                    }}
+                  >
+                    {album.title}
+                  </h1>
                   <div className="bottomInfo">
                     {/* 
                   
@@ -102,11 +183,14 @@ const Album = () => {
                     )}
 
                    */}
-                    {album.authorKey[0]?.profileImg && (
+                    {album?.authorKey[0]?.profileImg && (
                       <img src={album.authorKey[0].profileImg} alt="" />
                     )}
                     {album.authorKey[0]?.name && (
-                      <Link to="/author" className="singer">
+                      <Link
+                        to={`/authors/key/${album.authorKey[0].key}`}
+                        className="singer"
+                      >
                         {album.authorKey[0].name}
                         {' •'}
                       </Link>
@@ -123,7 +207,26 @@ const Album = () => {
                   <div className="left">
                     <i className="icon play fa-solid fa-circle-play fa-4x"></i>
                     <i className="icon shuffle fa-solid fa-shuffle fa-2x"></i>
-                    <i className="icon add fa-solid fa-circle-plus fa-2x"></i>
+                    {/* {favAlbums.includes(album._id) ? (
+                      <i
+                        className="fa-solid fa-circle-check fa-2x"
+                        style={{ color: '#1ed760' }}
+                        onClick={(e) => handleAlbumFavourited(e, album._id)}
+                      ></i>
+                    ) : (
+                      <i
+                        className="icon add fa-solid fa-circle-plus fa-2x"
+                        onClick={(e) => handleAlbumFavourited(e, album._id)}
+                      ></i>
+                    )} */}
+                    <i
+                      className={
+                        favAlbums.includes(album._id)
+                          ? 'icon liked fa-solid fa-circle-check fa-2x'
+                          : 'icon add fa-solid fa-circle-plus fa-2x'
+                      }
+                      onClick={(e) => handleAlbumFavourited(e, album._id)}
+                    ></i>
                     <i className="icon download fa-solid fa-circle-down fa-2x"></i>
                     <i className="icon more fa-solid fa-ellipsis fa-2x"></i>
                   </div>
@@ -155,9 +258,7 @@ const Album = () => {
                             ></i>
                             <div className="info">
                               <div className="title">{song.title}</div>
-                              <div className="singer">
-                                {album.authorKey[0]?.name}
-                              </div>
+                              <div className="singer">{song.author}</div>
                             </div>
                           </div>
                           <div className="right">
@@ -168,11 +269,14 @@ const Album = () => {
                               <div className="like">
                                 <i
                                   className={
-                                    liked
+                                    fav.includes(song._id)
                                       ? 'like liked fa-solid fa-heart fa-lg'
                                       : 'like fa-regular fa-heart fa-lg'
                                   }
-                                  onClick={() => setLiked((prev) => !prev)}
+                                  onClick={(e) => {
+                                    setLiked((prev) => !prev);
+                                    handleFavourited(e, song._id);
+                                  }}
                                 ></i>
                               </div>
                             </div>
@@ -219,7 +323,7 @@ const Album = () => {
             </div>
             <div className="others">
               <div className="head">
-                <h1>Továbbiak tőle: Post Malone</h1>
+                <h1>Továbbiak tőle: {album.authorKey[0]?.name}</h1>
                 <span>Teljes diszkográfia</span>
               </div>
               <div className="albums">

@@ -57,7 +57,7 @@ const RightSideBar = () => {
           }
         );
         dispatch({ type: 'FETCH_AUTHOR_SUCCESS', payload: result.data });
-        currentAuthor = result.data[0];
+        currentAuthor = result.data;
         //songslist[currentSong] = pickedSong;
       } catch (err) {
         dispatch({ type: 'FETCH_AUTHOR_FAILURE', payload: error.message });
@@ -102,7 +102,10 @@ const RightSideBar = () => {
             <div className="bottom">
               <div className="left">
                 <h1 className="songTitle">{songslist[currentSong]?.title}</h1>
-                <Link to="/author" className="infoSinger">
+                <Link
+                  to={`/authors/key/${currentAuthor?.key}`}
+                  className="infoSinger"
+                >
                   {currentAuthor?.name}
                 </Link>
               </div>
@@ -163,7 +166,7 @@ const RightSideBar = () => {
                 <div className="right">
                   <div className="info">
                     <div className="location">Scottscdale</div>
-                    <div className="name">Post Malone</div>
+                    <div className="name">{currentAuthor?.name}</div>
                     <div className="time">Szo 14:30 • TPC Scottscdale</div>
                   </div>
                 </div>
@@ -176,7 +179,7 @@ const RightSideBar = () => {
                 <div className="right">
                   <div className="info">
                     <div className="location">Scottscdale</div>
-                    <div className="name">Post Malone</div>
+                    <div className="name">{currentAuthor?.name}</div>
                     <div className="time">Szo 14:30 • TPC Scottscdale</div>
                   </div>
                 </div>

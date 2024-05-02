@@ -1,4 +1,4 @@
-.album {
+.favourites {
   flex: 2.5;
   height: calc(100% - 90px);
   overflow: scroll;
@@ -45,7 +45,7 @@
           }
 
           .albumTitle {
-            font-size: 90px;
+            font-size: 80px;
             margin: 0;
             line-height: 70px;
             padding: 0;
@@ -121,25 +121,13 @@
                 color: white;
               }
             }
+            .add {
+              color: #a7a7a7;
 
-            .icon {
-              &.liked {
-                color: #1ed760;
-
-                &:hover {
-                  scale: 1.05;
-                  cursor: pointer;
-                }
-              }
-
-              &.add {
-                color: #a7a7a7;
-
-                &:hover {
-                  scale: 1.05;
-                  cursor: pointer;
-                  color: white;
-                }
+              &:hover {
+                scale: 1.05;
+                cursor: pointer;
+                color: white;
               }
             }
 
@@ -222,6 +210,7 @@
           display: flex;
           flex-direction: column;
           padding: 10px 0;
+          padding-bottom: 20px;
 
           .song {
             display: flex;
@@ -231,6 +220,7 @@
 
             .left {
               display: flex;
+              align-items: center;
               flex: 5;
 
               .number {
@@ -250,6 +240,13 @@
                 color: white;
               }
 
+              .albumCover {
+                height: 40px;
+                width: 40px;
+                border-radius: 3px;
+                margin-right: 10px;
+              }
+
               .info {
                 display: flex;
                 flex-direction: column;
@@ -259,12 +256,15 @@
                 .title {
                   font-size: 14px;
                   font-weight: 600;
+                  color: inherit;
+                  text-decoration: none;
                 }
 
                 .singer {
                   font-size: 13px;
                   font-weight: 600;
                   color: #a7a7a7;
+                  text-decoration: none;
                 }
               }
             }
@@ -344,84 +344,6 @@
             }
           }
         }
-
-        .footer {
-          display: flex;
-          flex-direction: column;
-          padding: 20px;
-          color: #a7a7a7;
-          gap: 3px;
-
-          .releaseDate {
-            font-size: 13px;
-            font-weight: 600;
-          }
-
-          .copyright {
-            font-size: 11px;
-            font-weight: 500;
-          }
-        }
-      }
-    }
-
-    .merch {
-      display: flex;
-      flex-direction: column;
-      margin: 20px;
-      margin-bottom: 50px;
-
-      .head {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 25px;
-
-        h1 {
-          font-size: 22px;
-          margin: 0;
-        }
-      }
-
-      .items {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-      }
-    }
-
-    .others {
-      margin: 20px;
-      margin-bottom: 20px;
-
-      .head {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 25px;
-
-        h1 {
-          font-size: 22px;
-          margin: 0;
-        }
-
-        span {
-          color: #b3b3b3;
-          font-size: 14px;
-          font-weight: 600;
-
-          &:hover {
-            text-decoration: underline;
-            text-decoration-thickness: 1.5px;
-            cursor: pointer;
-          }
-        }
-      }
-
-      .albums {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
       }
     }
 

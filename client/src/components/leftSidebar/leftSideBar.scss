@@ -65,6 +65,9 @@
     background-color: #121212;
     border-radius: 8px;
     padding-top: 5px;
+    min-height: calc(83% - 25px);
+    height: max-content;
+    padding-bottom: 10px;
 
     .first {
       margin: 10px 20px;
